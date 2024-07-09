@@ -20,7 +20,7 @@ interface CardWrapperProps {
 
 export const CardWrapper = ({ children, headerLabel, backLabel, backLabelHref, description }: CardWrapperProps) => {
   return (
-    <Card className="w-1/4 flex bg-layer text-white flex-col border-second_text shadow-sm shadow-second_text">
+    <Card className="w-full mx-3 xl:mx-0 xl:w-1/4 flex bg-layer text-white flex-col border-second_text shadow-sm shadow-second_text">
       <CardHeader className="text-center">
         <CardTitle >{headerLabel}</CardTitle>
         <CardDescription>{description}</CardDescription>

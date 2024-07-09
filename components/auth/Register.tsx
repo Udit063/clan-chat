@@ -38,7 +38,7 @@ export const Register = () => {
 
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="w-screen min-h-screen h-full flex justify-center items-center">
       <CardWrapper headerLabel="Join Now" backLabel="Already have an account, login now" backLabelHref="/login" description="create a new account to start exciting conversations">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

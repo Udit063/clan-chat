@@ -37,7 +37,7 @@ export const Login = () => {
 
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="w-screen min-h-screen h-full flex justify-center items-center z-10">
       <CardWrapper headerLabel="Welcome Back" backLabel="Don't have an account, register now" backLabelHref="/register" description="Login to your account to get back to your conversation">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
