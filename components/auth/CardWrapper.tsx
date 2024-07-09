@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChromeIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
 interface CardWrapperProps {
@@ -27,8 +27,9 @@ export const CardWrapper = ({ children, headerLabel, backLabel, backLabelHref, d
       </CardHeader>
       <CardContent>
         {children}
-        <Button className="w-full mt-4 bg-gray-800 hover:bg-second_text hover:text-main duration-800 text-lg">
+        <Button className="w-full mt-4 flex gap-4 bg-gray-800 hover:bg-second_text hover:text-main duration-800 text-lg">
           <p>Continue with Google</p>
+          <ChromeIcon />
         </Button>
       </CardContent>
 

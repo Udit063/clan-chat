@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -39,7 +38,7 @@ export const Login = () => {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      <CardWrapper headerLabel="Welcome Back" backLabel="Don't have an account" backLabelHref="/register" description="Login to your account to get back to your conversation">
+      <CardWrapper headerLabel="Welcome Back" backLabel="Don't have an account, register now" backLabelHref="/register" description="Login to your account to get back to your conversation">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
