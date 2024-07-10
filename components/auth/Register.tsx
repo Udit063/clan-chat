@@ -53,7 +53,7 @@ export const Register = () => {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input className="border-second_text bg-layer text-primary_text ring-offset-second_text" placeholder="Ankur Sharma" {...field} />
+                    <Input placeholder="Ankur Sharma" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -67,7 +67,7 @@ export const Register = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input className="border-second_text bg-layer text-primary_text ring-offset-second_text" placeholder="ankursharma1493@gmail.com" {...field} />
+                    <Input placeholder="ankursharma1493@gmail.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,14 +80,14 @@ export const Register = () => {
                 <FormItem>
                   <FormLabel>password</FormLabel>
                   <FormControl>
-                    <Input type="password" className="border-second_text bg-layer text-primary_text ring-offset-second_text" placeholder="How dare you ask me my password" {...field} />
+                    <Input type="password" placeholder="How dare you ask me my password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormError message={error} />
-            <Button disabled={isPending} className="w-full bg-gray-900 hover:bg-second_text hover:text-main duration-800 text-lg " type="submit">Register</Button>
+            <Button disabled={isPending} className="w-full" type="submit">Register</Button>
           </form>
         </Form>
       </CardWrapper>

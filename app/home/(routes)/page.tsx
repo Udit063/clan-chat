@@ -1,16 +1,18 @@
 import { auth, signOut } from "@/auth";
+import { ModeToggle } from "@/components/toggle";
 import { Button } from "@/components/ui/button";
 
 const HomePage = async () => {
   const session = await auth()
   return (
-    <div>
+    <div className="h-full">
       {session && (
         <form action={async () => {
           "use server"
           await signOut()
         }}>
-          <Button className='bg-black text-white mr-4' type='submit'>Sign Out</Button>
+          <Button type='submit'>Sign Out</Button>
+          <ModeToggle />
         </form>)
       }
     </div>

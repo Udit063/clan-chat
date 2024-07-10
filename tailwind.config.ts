@@ -19,13 +19,10 @@ const config = {
     },
     extend: {
       colors: {
-        layer: "#030A15",
-        primary_text: "white",
-        second_text: "#4E7284",
-        main: "#07060F",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        main: "hsl(var(--main))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

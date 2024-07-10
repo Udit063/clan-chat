@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -18,7 +19,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <div className="h-screen w-screen">
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </div>
       </body>
     </html>
