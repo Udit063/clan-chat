@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { CardWrapper } from "./CardWrapper"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,11 +16,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { FormError } from "./FormError"
+import { register } from "@/actions/register"
 
 export const Register = () => {
 
   const [error, setError] = useState("")
-
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -30,10 +31,13 @@ export const Register = () => {
     },
   })
   function onSubmit(values: z.infer<typeof registerSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    setError("error in logging in, try again")
-    console.log(values)
+    setError("")
+    startTransition(() => {
+      register(values)
+        .then((data) => {
+          setError(data?.error ?? "");
+        })
+    });
   }
 
 
@@ -83,7 +87,7 @@ export const Register = () => {
               )}
             />
             <FormError message={error} />
-            <Button className="w-full bg-gray-900 hover:bg-second_text hover:text-main duration-800 text-lg " type="submit">Register</Button>
+            <Button disabled={isPending} className="w-full bg-gray-900 hover:bg-second_text hover:text-main duration-800 text-lg " type="submit">Register</Button>
           </form>
         </Form>
       </CardWrapper>

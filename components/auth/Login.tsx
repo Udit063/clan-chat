@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { CardWrapper } from "./CardWrapper"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,11 +16,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { FormError } from "./FormError"
+import { login } from "@/actions/login"
 
 export const Login = () => {
 
   const [error, setError] = useState("")
-
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -28,13 +29,15 @@ export const Login = () => {
       password: ""
     },
   })
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    setError("error in logging in, try again")
-    console.log(values)
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    setError("")
+    startTransition(() => {
+      login(values)
+        .then((data) => {
+          setError(data?.error ?? "");
+        })
+    });
   }
-
 
   return (
     <div className="w-screen min-h-screen h-full flex justify-center items-center z-10">
@@ -68,7 +71,7 @@ export const Login = () => {
               )}
             />
             <FormError message={error} />
-            <Button className="w-full bg-gray-900 hover:bg-second_text hover:text-main duration-800 text-lg " type="submit">Login</Button>
+            <Button disabled={isPending} className="w-full bg-gray-900 hover:bg-second_text hover:text-main duration-800 text-lg " type="submit">Login</Button>
           </form>
         </Form>
       </CardWrapper>
