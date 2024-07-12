@@ -1,4 +1,6 @@
 "use client"
+import { useState, useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -22,9 +24,14 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { serverSchema } from "@/schemas/server"
 import { FileUpload } from "@/components/FileUpload"
+import { createServer } from "@/actions/server"
+import { toast } from "sonner"
 
 export function CreateServer() {
 
+  const [error, setError] = useState("")
+  const [_, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof serverSchema>>({
     resolver: zodResolver(serverSchema),
@@ -36,9 +43,27 @@ export function CreateServer() {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (values: z.infer<typeof serverSchema>) => {
-    console.log(values);
+
+  const onSubmit = async (values: z.infer<typeof serverSchema>) => {
+    setError('');
+
+    startTransition(() => {
+      createServer(values)
+        .then((data) => {
+          if (data.error) {
+            toast(data.error);
+          } else {
+            router.refresh();
+            window.location.reload()
+          }
+          form.reset()
+        })
+        .catch((err) => {
+          toast(err)
+        });
+    });
   };
+
 
   return (
     <Card className="w-[350px] sm:w-[550px]">

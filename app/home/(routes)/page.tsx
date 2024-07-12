@@ -17,7 +17,7 @@ const HomePage = async () => {
     return (<div className="w-full min-h-screen h-full flex justify-center items-center"> <CreateServer /> <ModeToggle /> </div>)
   }
 
-  return <div className="h-full">Welcome back</div>
+  return redirect(`servers/${server.id}`)
 
 }
 export default HomePage;
