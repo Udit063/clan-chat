@@ -1,33 +1,23 @@
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
+import { CreateServer } from "@/components/modals/CreateServer";
 import { ModeToggle } from "@/components/toggle";
-import { Button } from "@/components/ui/button";
 import { getUserServer } from "@/data/server";
+import { redirect } from "next/navigation";
 
 const HomePage = async () => {
   const session = await auth()
   const userId = session?.user?.id as string;
-
-  const server = getUserServer(userId)
-  console.log(server)
-
-  if (!server) {
-    return (
-      <div>Create a server</div>
-    )
+  if (!session) {
+    redirect("/login")
   }
 
-  return (
-    <div className="h-full">
-      {session && (
-        <form action={async () => {
-          "use server"
-          await signOut()
-        }}>
-          <Button type='submit'>Sign Out</Button>
-          <ModeToggle />
-        </form>)
-      }
-    </div>
-  )
+  const server = await getUserServer(userId)
+
+  if (server == null) {
+    return (<div className="w-full min-h-screen h-full flex justify-center items-center"> <CreateServer /> <ModeToggle /> </div>)
+  }
+
+  return <div className="h-full">Welcome back</div>
+
 }
 export default HomePage;
