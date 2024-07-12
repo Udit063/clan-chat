@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { serverSchema } from "@/schemas/server"
+import { FileUpload } from "@/components/FileUpload"
 
 export function CreateServer() {
 
@@ -52,10 +53,13 @@ export function CreateServer() {
               control={form.control}
               name="imageUrl"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="picture">Picture</FormLabel>
+                <FormItem className="flex flex-col justify-center items-center">
                   <FormControl>
-                    <Input type="file" {...field} />
+                    <FileUpload
+                      endpoint="serverImage"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -78,5 +82,8 @@ export function CreateServer() {
           </form>
         </Form>
       </CardContent>
+      <CardFooter className="flex items-center justify-center">
+        <span className="text-blue-900 dark:text-blue-400" >Fun Fact - {" "}</span> <p className="text-sm">This app is inspired by discord{" "}!</p>
+      </CardFooter>
     </Card>);
 };
