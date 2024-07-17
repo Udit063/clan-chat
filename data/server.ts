@@ -34,3 +34,21 @@ export const getUserEntireServers = async (userId: string) => {
     return null;
   }
 }
+
+export const getServer = async ({ serverId, userId }: { serverId: string, userId: string }) => {
+  try {
+    const server = await db.server.findFirst({
+      where: {
+        id: serverId,
+        members: {
+          some: {
+            userId: userId
+          }
+        }
+      }
+    })
+    return server
+  } catch (err) {
+    return null
+  }
+}

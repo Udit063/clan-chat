@@ -1,6 +1,9 @@
+import { ServerSidebar } from "@/components/bars/ServerSidebar"
+
 const ServerIdPage = () => {
   return (
-    <div>Server Id Page</div>
+    <div>
+    </div>
   )
 }
 
