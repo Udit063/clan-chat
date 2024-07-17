@@ -52,3 +52,31 @@ export const getServer = async ({ serverId, userId }: { serverId: string, userId
     return null
   }
 }
+
+export const getServerAllDetails = async (serverId: string) => {
+  try {
+    const server = await db.server.findUnique({
+      where: {
+        id: serverId
+      },
+      include: {
+        channels: {
+          orderBy: {
+            createdAt: "asc"
+          }
+        },
+        members: {
+          include: {
+            user: true,
+          },
+          orderBy: {
+            role: "asc"
+          }
+        }
+      }
+    })
+    return server
+  } catch (err) {
+    return null
+  }
+}
