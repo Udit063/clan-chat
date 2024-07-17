@@ -25,13 +25,14 @@ import { z } from "zod"
 import { serverSchema } from "@/schemas/server"
 import { FileUpload } from "@/components/FileUpload"
 import { createServer } from "@/actions/server"
-import { toast } from "sonner"
+import { useToast } from "@/components/ui/use-toast"
 
 export function CreateServer() {
 
   const [error, setError] = useState("")
   const [_, startTransition] = useTransition();
   const router = useRouter();
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof serverSchema>>({
     resolver: zodResolver(serverSchema),
@@ -51,7 +52,9 @@ export function CreateServer() {
       createServer(values)
         .then((data) => {
           if (data.error) {
-            toast(data.error);
+            toast({
+              description: data.error
+            })
           } else {
             router.refresh();
             window.location.reload()
@@ -59,7 +62,9 @@ export function CreateServer() {
           form.reset()
         })
         .catch((err) => {
-          toast(err)
+          toast({
+            description: err
+          })
         });
     });
   };
@@ -68,7 +73,7 @@ export function CreateServer() {
   return (
     <Card className="w-[350px] sm:w-[550px]">
       <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-bold">Customize your Server</CardTitle>
+        <CardTitle className="text-3xl font-bold">Create New Server</CardTitle>
         <CardDescription>Embark on an exciting journey by giving an interesting name and image to your server</CardDescription>
       </CardHeader>
       <CardContent>
@@ -79,6 +84,7 @@ export function CreateServer() {
               name="imageUrl"
               render={({ field }) => (
                 <FormItem className="flex flex-col justify-center items-center">
+                  <FormLabel className="uppercase" htmlFor="name">Server Image</FormLabel>
                   <FormControl>
                     <FileUpload
                       endpoint="serverImage"

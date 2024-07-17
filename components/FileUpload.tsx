@@ -4,7 +4,6 @@ import { X } from "lucide-react"
 import Image from "next/image";
 
 import { UploadDropzone } from "@/lib/uploadthing";
-import "@uploadthing/react/styles.css";
 
 interface FileUploadProps {
   onChange: (url?: string) => void;
@@ -35,6 +34,7 @@ export const FileUpload = ({ onChange, endpoint, value }: FileUploadProps) => {
 
   return (
     <UploadDropzone
+      className="w-[300px] h-[250px] rounded-xl"
       endpoint={endpoint}
       onClientUploadComplete={(res) => {
         onChange(res?.[0].url);

@@ -21,12 +21,12 @@ export const NavigationItems = ({ key, id, name, imageUrl }: NavigationItemsProp
   }
 
   return (
-    <div key={key}>
+    <div key={key} className="py-2">
       <ActionTooltip side="right" align="center" label={name}>
         <button className="flex items-center group relative" onClick={HandleServerClick}>
           <div className={cn("absolute left-0 bg-primary rounded-r-full transition-all w-[4px]",
             params?.serverId !== id && "group-hover:h-[20px]",
-            params?.serverId === id ? "h-[32px]" : "h-[8px]"
+            params?.serverId === id ? "h-[32px]" : "h-[8px] bg-neutral-800"
           )} />
           <div
             className={cn(
