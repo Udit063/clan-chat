@@ -6,8 +6,6 @@ import { db } from "@/lib/db"
 import { serverSchema } from "@/schemas/server"
 import { z } from "zod"
 import { MemberRole } from "@prisma/client"
-import { throws } from "assert"
-import { error } from "console"
 
 export const createServer = async (values: z.infer<typeof serverSchema>) => {
 

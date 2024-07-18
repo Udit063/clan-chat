@@ -26,7 +26,6 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
   if (userRole !== "ADMIN" && userRole !== "MODERATOR" && userRole !== "GUEST") {
     redirect("/")
   }
-  console.log(server)
   return (
     <div className="w-[300px] bg-[#08061A] h-screen">
       <div className="w-full flex items-center justify-center">
