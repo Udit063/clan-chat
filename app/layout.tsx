@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <div className="h-screen w-screen">
+        <div className="h-screen w-screen overflow-hidden">
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"

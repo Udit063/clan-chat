@@ -6,21 +6,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "../ui/input"
-
-//interface InviteModalProps {
-//  children: React.ReactNode;
-// inviteCode: string;
-//}
+import { useModal } from "@/hooks/use-modal-store"
 
 export function InviteModal() {
+
+  const { isOpen, onClose } = useModal();
+
   return (
-    <Dialog open>
-      <DialogTrigger>
-        {/*Trigger button*/}
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+
       <DialogContent className="w-[350px] sm:w-[550px] flex flex-col items-center">
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
@@ -28,9 +23,6 @@ export function InviteModal() {
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <div>
-          <Input />
-        </div>
         <DialogFooter>
           <Button type="submit">Save changes</Button>
         </DialogFooter>

@@ -1,3 +1,5 @@
+"use client"
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,22 +7,31 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useModal } from "@/hooks/use-modal-store";
+import { ServerWithMembers } from "@/types";
 
 import { ChevronDown, LogOut, PlusCircle, Settings, Trash2, UserRoundPlus, Users } from "lucide-react";
 
+
 interface ServerButtonsProps {
-  server: string;
+  server: ServerWithMembers
   userRole: "ADMIN" | "MODERATOR" | "GUEST"
 }
 
 export const ServerButtons = ({ server, userRole }: ServerButtonsProps) => {
+
+  const { onOpen } = useModal();
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-xl font-bold flex w-full justify-around items-center bg-card py-4 focus:border-none active:border-none hover:border-none">
-        <div>{server}</div> <ChevronDown />
+      <DropdownMenuTrigger className="text-xl font-bold flex w-full justify-around items-center bg-card py-4 focus:outline-none">
+        <div>{server.name}</div> <ChevronDown />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="border-none bg-neutral-800 w-[250px]">
-        <DropdownMenuItem className="flex w-full justify-between items-center my-1 p-2 cursor-pointer group">
+        <DropdownMenuItem
+          className="flex w-full justify-between items-center my-1 p-2 cursor-pointer group"
+          onClick={() => onOpen("inviteModal", { server })}
+        >
           <div className="group-hover:text-blue-500">Invite People</div>
           <UserRoundPlus size={20} className="group-hover:text-blue-500" />
         </DropdownMenuItem>

@@ -5,12 +5,10 @@ import { Plus } from "lucide-react"
 export const NavigationAction = () => {
 
   const { onOpen } = useModal()
-  const openCustomizeServer = () => {
-    onOpen("customizeServer")
-  }
+
 
   return (
-    <button onClick={openCustomizeServer} className="group flex items-center justify-center">
+    <button onClick={() => onOpen("customizeServer")} className="group flex items-center justify-center">
       <div className="flex mx-3 mt-3 h-[48px] w-[48px] rounded-[24px] 
           group-hover:rounded-[16px] transition-all overflow-hidden 
           items-center justify-center bg-neutral-800 
