@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ModalProvider } from "@/components/modal-provider";
 import { Toaster } from "@/components/ui/sonner"
 
 const font = Open_Sans({ subsets: ["latin"] });
@@ -26,6 +27,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </div>

@@ -10,7 +10,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   Form,
@@ -29,9 +28,12 @@ import { FileUpload } from "@/components/FileUpload"
 import { createServer } from "@/actions/server"
 import { useToast } from "../ui/use-toast"
 
-import { ReactNode } from "react"
+import { useModal } from "@/hooks/use-modal-store"
 
-export function CustomizeServer({ children }: { children: ReactNode }) {
+export function CustomizeServer() {
+
+  const { isOpen, onClose, type } = useModal();
+  const isModalOpen = isOpen && type === "customizeServer";
 
   const [error, setError] = useState("")
   const [_, startTransition] = useTransition();
@@ -59,13 +61,10 @@ export function CustomizeServer({ children }: { children: ReactNode }) {
             toast({
               description: data.error
             })
-          } else {
-            if (data.id) {
-              router.push(data.id);
-              window.location.reload()
-            }
           }
           form.reset()
+          router.refresh();
+          onClose()
         })
         .catch((err) => {
           toast({
@@ -75,13 +74,13 @@ export function CustomizeServer({ children }: { children: ReactNode }) {
     });
   };
 
-
+  const handleClose = () => {
+    form.reset();
+    onClose()
+  }
 
   return (
-    <Dialog >
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+    <Dialog open={isModalOpen} onOpenChange={handleClose} >
       <DialogContent className="w-[350px] sm:w-[550px] flex flex-col items-center">
         <DialogHeader>
           <DialogTitle>Customize your Server</DialogTitle>
