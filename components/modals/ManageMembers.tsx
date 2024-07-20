@@ -119,24 +119,27 @@ export function ManageMembers() {
                   </div>
                 </div>
                 <div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>{isLoading === member.id ? <Loader /> : <EllipsisVerticalIcon />}</DropdownMenuTrigger>
-                    <DropdownMenuContent side="left" className="border-secondary" >
-                      <DropdownMenuSub>
-                        <DropdownMenuSubTrigger className="gap-2"><UserRoundPen size={15} />Role</DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                          <DropdownMenuSubContent className="border-secondary">
-                            {
-                              membersRole.map((item) => (
-                                <DropdownMenuItem className="gap-2" >{item.icon}{item.role}</DropdownMenuItem>
-                              ))
-                            }
-                          </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                      </DropdownMenuSub>
-                      <DropdownMenuItem onClick={() => handledeleteUser(member.id)} className="gap-2"><Trash size={15} />Kick</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  {
+                    member.userId !== user.id &&
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>{isLoading === member.id ? <Loader /> : <EllipsisVerticalIcon />}</DropdownMenuTrigger>
+                      <DropdownMenuContent side="left" className="border-secondary" >
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger className="gap-2"><UserRoundPen size={15} />Role</DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent className="border-secondary">
+                              {
+                                membersRole.map((item) => (
+                                  <DropdownMenuItem className="gap-2" >{item.icon}{item.role}</DropdownMenuItem>
+                                ))
+                              }
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                        <DropdownMenuItem onClick={() => handledeleteUser(member.id)} className="gap-2"><Trash size={15} />Kick</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  }
                 </div>
               </div>
             ))}

@@ -65,7 +65,9 @@ export const ServerButtons = ({ server, userRole }: ServerButtonsProps) => {
             <PlusCircle size={20} className="group-hover:text-blue-500" />
           </DropdownMenuItem>
         }
-        <DropdownMenuSeparator className="bg-rose-500" />
+        {userRole !== "GUEST" &&
+          <DropdownMenuSeparator className="bg-rose-500" />
+        }
         {
           userRole === "ADMIN" &&
           <DropdownMenuItem className=" text-rose-500 flex w-full justify-between items-center p-2 my-1 cursor-pointer focus:bg-rose-500">

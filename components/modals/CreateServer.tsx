@@ -71,7 +71,7 @@ export function CreateServer() {
 
 
   return (
-    <Card className="w-[350px] sm:w-[550px]">
+    <Card className="w-[350px] sm:w-[550px] border-secondary border">
       <CardHeader className="text-center">
         <CardTitle className="text-3xl font-bold">Create New Server</CardTitle>
         <CardDescription>Embark on an exciting journey by giving an interesting name and image to your server</CardDescription>

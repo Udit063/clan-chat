@@ -36,7 +36,7 @@ export function InviteModal() {
 
   const handleCopyCode = () => {
     setIsCopied(true);
-    navigator.clipboard.writeText(inviteCode)
+    navigator.clipboard.writeText(inviteUrl)
   }
 
   useEffect(() => {

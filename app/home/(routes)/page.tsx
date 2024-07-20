@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import { CreateServer } from "@/components/modals/CreateServer";
-import { ModeToggle } from "@/components/toggle";
 import { getUserServer } from "@/data/server";
 import { redirect } from "next/navigation";
 
@@ -14,7 +13,7 @@ const HomePage = async () => {
   const server = await getUserServer(userId)
 
   if (server == null) {
-    return (<div className="w-full min-h-screen h-full flex justify-center items-center"> <CreateServer /> <ModeToggle /> </div>)
+    return (<div className="w-full min-h-screen h-full flex justify-center items-center"> <CreateServer /> </div>)
   }
 
   return redirect(`servers/${server.id}`)
