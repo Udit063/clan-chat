@@ -50,8 +50,6 @@ export const createServer = async (values: z.infer<typeof serverSchema>) => {
 
 export const updateServer = async (serverId: string, values: z.infer<typeof serverSchema>) => {
   try {
-
-    return { error: "nikl chutiye" }
     const validatedFields = serverSchema.parse(values);
     if (!validatedFields) {
       return { error: "Invalidated Fields" }

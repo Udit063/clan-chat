@@ -50,7 +50,10 @@ export const ServerButtons = ({ server, userRole }: ServerButtonsProps) => {
         }
         {
           userRole !== "GUEST" &&
-          <DropdownMenuItem className="flex w-full justify-between items-center my-1 p-2 cursor-pointer group">
+          <DropdownMenuItem
+            className="flex w-full justify-between items-center my-1 p-2 cursor-pointer group"
+            onClick={() => onOpen("manageMembers", { server })}
+          >
             <div className="group-hover:text-blue-500">Manage Members</div>
             <Users size={20} className="group-hover:text-blue-500" />
           </DropdownMenuItem>

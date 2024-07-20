@@ -6,6 +6,7 @@ import { useModal } from "@/hooks/use-modal-store"
 import { ServerSettings } from "./modals/ServerSettings";
 import { InviteModal } from "./modals/InviteModal";
 import { CustomizeServer } from "@/components/modals/CustomizeServer"
+import { ManageMembers } from "./modals/ManageMembers";
 
 export const ModalProvider = () => {
 
@@ -24,6 +25,7 @@ export const ModalProvider = () => {
       {isOpen && type === "customizeServer" && <CustomizeServer />}
       {isOpen && type === "inviteModal" && <InviteModal />}
       {isOpen && type === "serverSettings" && <ServerSettings />}
+      {isOpen && type === "manageMembers" && <ManageMembers />}
     </>
   )
 }
