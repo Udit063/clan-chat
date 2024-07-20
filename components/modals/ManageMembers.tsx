@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+import { redirect, useRouter } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -18,23 +20,29 @@ import {
   DropdownMenuPortal
 } from "@/components/ui/dropdown-menu"
 import { useModal } from "@/hooks/use-modal-store"
+import { useSession } from 'next-auth/react';
 
-import { useRouter } from "next/navigation";
 import { ServerWithMembers } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { EllipsisVerticalIcon, Plus, ShieldAlertIcon, Trash, User, UserRoundCog, UserRoundPen } from "lucide-react";
+import { EllipsisVerticalIcon, Loader, Plus, ShieldAlertIcon, Trash, User, UserRoundCog, UserRoundPen } from "lucide-react";
+import { kickOutMember } from "@/actions/members";
+import { toast } from "sonner";
 
 export function ManageMembers() {
 
-  const { isOpen, onClose, type, data } = useModal();
+  const { isOpen, onOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "manageMembers"
   const { server } = data as { server: ServerWithMembers }
-
+  const [isLoading, setIsLoading] = useState("")
   const router = useRouter();
   if (!data.server) {
     router.push("/")
   }
+  const { data: session } = useSession();
+  const user = session?.user
+  if (!user) redirect("/")
+
   const members = server.members.map((member) => {
     return {
       id: member.id,
@@ -54,6 +62,32 @@ export function ManageMembers() {
       icon: <UserRoundCog size={15} />,
       role: "Moderator"
     }]
+
+
+  const handledeleteUser = async (memberId: string) => {
+    try {
+      setIsLoading(memberId);
+      const response = await kickOutMember({ headId: user.id as string, serverId: server.id, memberId })
+      if (response.success) {
+        toast.success(`deleted ${response.success?.deletedUser.role}`)
+      }
+      if (response.error) {
+        const errorMessage = typeof response.error === "string" ? response.error : "Error hogya oh raba raba";
+        toast.error(errorMessage)
+        return;
+      }
+
+      //@ts-ignore
+      onOpen("manageMembers", { server: response?.success?.server })
+      console.log(response.success?.server)
+
+    } catch (error) {
+      toast.error("try again")
+    } finally {
+      setIsLoading("")
+    }
+  }
+
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -86,7 +120,7 @@ export function ManageMembers() {
                 </div>
                 <div>
                   <DropdownMenu>
-                    <DropdownMenuTrigger><EllipsisVerticalIcon /></DropdownMenuTrigger>
+                    <DropdownMenuTrigger>{isLoading === member.id ? <Loader /> : <EllipsisVerticalIcon />}</DropdownMenuTrigger>
                     <DropdownMenuContent side="left" className="border-secondary" >
                       <DropdownMenuSub>
                         <DropdownMenuSubTrigger className="gap-2"><UserRoundPen size={15} />Role</DropdownMenuSubTrigger>
@@ -100,7 +134,7 @@ export function ManageMembers() {
                           </DropdownMenuSubContent>
                         </DropdownMenuPortal>
                       </DropdownMenuSub>
-                      <DropdownMenuItem className="gap-2"><Trash size={15} />Kick</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handledeleteUser(member.id)} className="gap-2"><Trash size={15} />Kick</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
