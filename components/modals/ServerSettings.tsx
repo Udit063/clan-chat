@@ -1,13 +1,17 @@
 "use client"
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { serverSchema } from "@/schemas/server"
+import { useModal } from "@/hooks/use-modal-store"
 
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
@@ -19,31 +23,24 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+
+import { useToast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { serverSchema } from "@/schemas/server"
 import { FileUpload } from "@/components/FileUpload"
-import { createServer } from "@/actions/server"
-
-import { useModal } from "@/hooks/use-modal-store"
+import { updateServer } from "@/actions/server"
 import { toast } from "sonner"
-
-export function CustomizeServer() {
-
-  const { isOpen, onClose, type } = useModal();
-  const isModalOpen = isOpen && type === "customizeServer";
+export const ServerSettings = () => {
 
   const [error, setError] = useState("")
   const [_, startTransition] = useTransition();
   const router = useRouter();
+  const { isOpen, onClose, data } = useModal()
 
   const form = useForm<z.infer<typeof serverSchema>>({
     resolver: zodResolver(serverSchema),
     defaultValues: {
-      name: "",
-      imageUrl: ""
+      name: data.server?.name,
+      imageUrl: data.server?.imageUrl
     },
   })
 
@@ -54,7 +51,7 @@ export function CustomizeServer() {
     setError('');
 
     startTransition(() => {
-      createServer(values)
+      updateServer(data.server?.id as string, values)
         .then((data) => {
           if (data.error) {
             toast.error(data.error)
@@ -63,7 +60,7 @@ export function CustomizeServer() {
           form.reset()
           router.refresh();
           onClose()
-          toast.success("Created successfully")
+          toast.success("Updated successfully")
         })
         .catch((err) => {
           toast.error(err)
@@ -77,12 +74,12 @@ export function CustomizeServer() {
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={handleClose} >
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="w-[350px] sm:w-[550px] flex flex-col items-center border-secondary">
         <DialogHeader>
-          <DialogTitle>Customize your Server</DialogTitle>
+          <DialogTitle className="font-bold text-3xl text-center">Server Settings</DialogTitle>
           <DialogDescription>
-            Embark on an exciting journey by giving an interesting name and image to your server
+            You can customize your server as you want, Go ahead
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col w-full justify-center items-center">
@@ -93,7 +90,7 @@ export function CustomizeServer() {
                 name="imageUrl"
                 render={({ field }) => (
                   <FormItem className="w-full" >
-                    <FormLabel className="uppercase" htmlFor="name">Server Name</FormLabel>
+                    <FormLabel className="uppercase" htmlFor="name">Server Image</FormLabel>
                     <FormControl>
                       <FileUpload
                         endpoint="serverImage"
@@ -113,22 +110,19 @@ export function CustomizeServer() {
                   <FormItem className="w-full">
                     <FormLabel className="uppercase" htmlFor="name">Server Name</FormLabel>
                     <FormControl>
-                      <Input className="w-full" disabled={isLoading} placeholder="Name of your server" {...field} />
+                      <Input className="w-full active:outline-none active:border-none" disabled={isLoading} placeholder="Name of your server" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button className="w-full text-lg font-semibold" disabled={isLoading} type="submit">Create</Button>
+              <Button className="w-full text-lg font-semibold" disabled={isLoading} type="submit">Save</Button>
             </form>
           </Form>
         </div>
-
-        <DialogFooter>
-          {error}
-        </DialogFooter>
       </DialogContent>
-    </Dialog >
+    </Dialog>
+
   )
 }
 

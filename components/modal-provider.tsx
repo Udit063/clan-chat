@@ -1,9 +1,11 @@
 "use client"
 
-import { CustomizeServer } from "@/components/modals/CustomizeServer"
 import { useEffect, useState } from "react"
-import { InviteModal } from "./modals/InviteModal";
 import { useModal } from "@/hooks/use-modal-store"
+
+import { ServerSettings } from "./modals/ServerSettings";
+import { InviteModal } from "./modals/InviteModal";
+import { CustomizeServer } from "@/components/modals/CustomizeServer"
 
 export const ModalProvider = () => {
 
@@ -20,6 +22,8 @@ export const ModalProvider = () => {
   return (
     <>
       {isOpen && type === "customizeServer" && <CustomizeServer />}
-      {isOpen && type === "inviteModal" && <InviteModal />}    </>
+      {isOpen && type === "inviteModal" && <InviteModal />}
+      {isOpen && type === "serverSettings" && <ServerSettings />}
+    </>
   )
 }

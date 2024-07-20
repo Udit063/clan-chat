@@ -24,6 +24,7 @@ export function InviteModal() {
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onOpen, onClose, data } = useModal();
+
   const router = useRouter();
   if (!data.server) {
     router.push("/")

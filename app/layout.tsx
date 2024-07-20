@@ -29,9 +29,9 @@ export default function RootLayout({
           >
             <ModalProvider />
             {children}
+            <Toaster />
           </ThemeProvider>
         </div>
-        <Toaster />
       </body>
     </html>
   );

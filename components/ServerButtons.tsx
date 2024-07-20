@@ -28,16 +28,22 @@ export const ServerButtons = ({ server, userRole }: ServerButtonsProps) => {
         <div>{server.name}</div> <ChevronDown />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="border-none bg-neutral-800 w-[250px]">
-        <DropdownMenuItem
-          className="flex w-full justify-between items-center my-1 p-2 cursor-pointer group"
-          onClick={() => onOpen("inviteModal", { server })}
-        >
-          <div className="group-hover:text-blue-500">Invite People</div>
-          <UserRoundPlus size={20} className="group-hover:text-blue-500" />
-        </DropdownMenuItem>
+        {
+          userRole !== "GUEST" &&
+          <DropdownMenuItem
+            className="flex w-full justify-between items-center my-1 p-2 cursor-pointer group"
+            onClick={() => onOpen("inviteModal", { server })}
+          >
+            <div className="group-hover:text-blue-500">Invite People</div>
+            <UserRoundPlus size={20} className="group-hover:text-blue-500" />
+          </DropdownMenuItem>
+        }
         {
           userRole === "ADMIN" &&
-          <DropdownMenuItem className="flex w-full justify-between items-center my-1 p-2 cursor-pointer group">
+          <DropdownMenuItem
+            className="flex w-full justify-between items-center my-1 p-2 cursor-pointer group"
+            onClick={() => onOpen("serverSettings", { server })}
+          >
             <div className="group-hover:text-blue-500">Server Settings</div>
             <Settings size={20} className="group-hover:text-blue-500" />
           </DropdownMenuItem>

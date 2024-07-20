@@ -47,3 +47,30 @@ export const createServer = async (values: z.infer<typeof serverSchema>) => {
     return { error: "Try again, we had a problem" };
   }
 }
+
+export const updateServer = async (serverId: string, values: z.infer<typeof serverSchema>) => {
+  try {
+
+    return { error: "nikl chutiye" }
+    const validatedFields = serverSchema.parse(values);
+    if (!validatedFields) {
+      return { error: "Invalidated Fields" }
+    }
+    const { name, imageUrl } = validatedFields;
+
+    const updatedServer = await db.server.update({
+      where: {
+        id: serverId
+      },
+      data: {
+        name,
+        imageUrl
+      }
+    })
+
+    return { data: updatedServer };
+
+  } catch (error) {
+    return { error: "Try again, we had a problem" };
+  }
+}
