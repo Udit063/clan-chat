@@ -67,6 +67,7 @@ export function CustomizeServer() {
         })
         .catch((err) => {
           toast.error(err)
+          setError(err)
         });
     });
   };

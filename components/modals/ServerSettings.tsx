@@ -14,6 +14,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogFooter
 } from "@/components/ui/dialog"
 import {
   Form,
@@ -24,7 +25,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-import { useToast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { FileUpload } from "@/components/FileUpload"
 import { updateServer } from "@/actions/server"
@@ -34,7 +34,8 @@ export const ServerSettings = () => {
   const [error, setError] = useState("")
   const [_, startTransition] = useTransition();
   const router = useRouter();
-  const { isOpen, onClose, data } = useModal()
+  const { isOpen, onClose, type, data } = useModal()
+  const isModalOpen = isOpen && type === "serverSettings"
 
   const form = useForm<z.infer<typeof serverSchema>>({
     resolver: zodResolver(serverSchema),
@@ -64,6 +65,7 @@ export const ServerSettings = () => {
         })
         .catch((err) => {
           toast.error(err)
+          setError(err)
         });
     });
   };
@@ -74,7 +76,7 @@ export const ServerSettings = () => {
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="w-[350px] sm:w-[550px] flex flex-col items-center border-secondary">
         <DialogHeader>
           <DialogTitle className="font-bold text-3xl text-center">Server Settings</DialogTitle>
@@ -121,6 +123,9 @@ export const ServerSettings = () => {
           </Form>
         </div>
       </DialogContent>
+      <DialogFooter>
+        {error}
+      </DialogFooter>
     </Dialog>
 
   )

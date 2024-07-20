@@ -23,7 +23,8 @@ export function InviteModal() {
 
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { isOpen, onOpen, onClose, data } = useModal();
+  const { isOpen, onOpen, onClose, type, data } = useModal();
+  const isModalOpen = isOpen && type === "inviteModal"
 
   const router = useRouter();
   if (!data.server) {
@@ -61,7 +62,7 @@ export function InviteModal() {
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isModalOpen} onOpenChange={onClose}>
 
       <DialogContent className="w-[350px] sm:w-[550px] flex flex-col items-center border-secondary">
         <DialogHeader>
