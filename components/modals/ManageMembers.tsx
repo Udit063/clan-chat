@@ -11,7 +11,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuPortal
 } from "@/components/ui/dropdown-menu"
 import { useModal } from "@/hooks/use-modal-store"
 
@@ -19,7 +23,7 @@ import { useRouter } from "next/navigation";
 import { ServerWithMembers } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { EllipsisVerticalIcon, Plus, ShieldAlertIcon, Trash, UserRoundPen } from "lucide-react";
+import { EllipsisVerticalIcon, Plus, ShieldAlertIcon, Trash, User, UserRoundCog, UserRoundPen } from "lucide-react";
 
 export function ManageMembers() {
 
@@ -40,7 +44,16 @@ export function ManageMembers() {
       role: member.role
     }
   })
-  const testingUiMembers = [...members, ...members, ...members, ...members]
+
+  const membersRole = [
+    {
+      icon: <User size={15} />,
+      role: "Guest"
+    },
+    {
+      icon: <UserRoundCog size={15} />,
+      role: "Moderator"
+    }]
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -54,7 +67,7 @@ export function ManageMembers() {
         </DialogHeader>
         <div className="w-full">
           <ScrollArea className="rounded-lg h-48 w-full">
-            {testingUiMembers.map((member) => (
+            {members.map((member) => (
               <div key={member.id} className="w-full h-[60px] flex justify-between items-center px-6 bg-main my-2 rounded-sm ">
                 <div className="flex gap-5">
                   <div className="h-[48px] w-[48px] bg-emerald-800 flex text-xl text-white items-center justify-center rounded-full">
@@ -75,8 +88,19 @@ export function ManageMembers() {
                   <DropdownMenu>
                     <DropdownMenuTrigger><EllipsisVerticalIcon /></DropdownMenuTrigger>
                     <DropdownMenuContent side="left" className="border-secondary" >
-                      <DropdownMenuItem className="gap-2">Role<UserRoundPen size={15} /></DropdownMenuItem>
-                      <DropdownMenuItem className="gap-2">Kick<Trash size={15} /></DropdownMenuItem>
+                      <DropdownMenuSub>
+                        <DropdownMenuSubTrigger className="gap-2"><UserRoundPen size={15} />Role</DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                          <DropdownMenuSubContent className="border-secondary">
+                            {
+                              membersRole.map((item) => (
+                                <DropdownMenuItem className="gap-2" >{item.icon}{item.role}</DropdownMenuItem>
+                              ))
+                            }
+                          </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                      </DropdownMenuSub>
+                      <DropdownMenuItem className="gap-2"><Trash size={15} />Kick</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
