@@ -32,11 +32,15 @@ import { channelSchema } from "@/schemas/channels"
 import { useModal } from "@/hooks/use-modal-store"
 import { toast } from "sonner"
 import { ChannelType } from "@prisma/client"
+import axios from "axios";
+import qs from "query-string"
+import { useParams } from "next/navigation"
 
 export function CreateChannels() {
 
   const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createChannels";
+  const params = useParams()
 
   const form = useForm<z.infer<typeof channelSchema>>({
     resolver: zodResolver(channelSchema),
@@ -49,9 +53,25 @@ export function CreateChannels() {
   const isLoading = form.formState.isSubmitting;
 
 
-  const onSubmit = (values: z.infer<typeof channelSchema>) => {
-    console.log(values)
-    form.reset()
+  const onSubmit = async (values: z.infer<typeof channelSchema>) => {
+    try {
+
+      const url = qs.stringifyUrl({
+        url: "/api/channels",
+        query: {
+          serverId: params.serverId
+        }
+      })
+      const response = await axios.post(url, values)
+      if (response.data) {
+        toast.success("Channel created")
+      }
+      form.reset()
+      onClose()
+    } catch (err) {
+      console.log(err);
+      toast.error("try again")
+    }
   };
 
   const handleClose = () => {
