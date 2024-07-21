@@ -73,14 +73,20 @@ export const ServerButtons = ({ server, userRole }: ServerButtonsProps) => {
         }
         {
           userRole === "ADMIN" &&
-          <DropdownMenuItem className=" text-rose-500 flex w-full justify-between items-center p-2 my-1 cursor-pointer focus:bg-rose-500">
+          <DropdownMenuItem
+            className=" text-rose-500 flex w-full justify-between items-center p-2 my-1 cursor-pointer focus:bg-rose-500"
+            onClick={() => onOpen("deleteServer", { server })}
+          >
             <div>Delete Server</div>
             <Trash2 size={20} />
           </DropdownMenuItem>
         }
         {
           userRole !== "ADMIN" &&
-          <DropdownMenuItem className=" text-rose-500 flex w-full justify-between items-center p-2 my-1 cursor-pointer focus:bg-rose-500">
+          <DropdownMenuItem
+            className=" text-rose-500 flex w-full justify-between items-center p-2 my-1 cursor-pointer focus:bg-rose-500"
+            onClick={() => onOpen("leaveServer", { server })}
+          >
             <div>Leave Server</div>
             <LogOut size={20} />
           </DropdownMenuItem>

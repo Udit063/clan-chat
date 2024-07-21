@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { ServerSidebar } from "@/components/bars/ServerSidebar";
 import { getServer } from "@/data/server";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const ServerIdLayout = async ({
   children,
@@ -14,12 +14,7 @@ const ServerIdLayout = async ({
   const userId = session?.user?.id as string
   const server = await getServer({ serverId: params.serverId, userId: userId });
   if (!server) {
-    return (
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <p className="text-9xl">You are not authorized</p>
-        <Link href="/login" className="w-[300px] h-[300px] rounded-2xl bg-blue-600">Go to login</Link>
-      </div>
-    )
+    redirect("/home")
   }
 
   return (
