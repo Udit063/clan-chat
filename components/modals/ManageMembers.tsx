@@ -25,9 +25,10 @@ import { useSession } from 'next-auth/react';
 import { ServerWithMembers } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { EllipsisVerticalIcon, Loader, Plus, ShieldAlertIcon, Trash, User, UserRoundCog, UserRoundPen } from "lucide-react";
-import { kickOutMember } from "@/actions/members";
+import { EllipsisVerticalIcon, Loader, Shield, ShieldAlertIcon, Trash, User, UserRoundCog, UserRoundPen } from "lucide-react";
+import { kickOutMember, memberRolesUpdate } from "@/actions/members";
 import { toast } from "sonner";
+import { MemberRole } from "@prisma/client";
 
 export function ManageMembers() {
 
@@ -56,13 +57,36 @@ export function ManageMembers() {
   const membersRole = [
     {
       icon: <User size={15} />,
-      role: "Guest"
+      role: "Guest",
+      value: MemberRole.GUEST
     },
     {
       icon: <UserRoundCog size={15} />,
-      role: "Moderator"
+      role: "Moderator",
+      value: MemberRole.MODERATOR
     }]
 
+  const handleRoleUpdates = async ({ memberId, role, errorStateId }: { memberId: string, role: MemberRole, errorStateId: string }) => {
+    try {
+      setIsLoading(errorStateId)
+      const response = await memberRolesUpdate({ headId: user.id as string, serverId: server.id, memberId, role })
+      if (response.success) {
+        toast.success(`Role Updated`)
+      }
+      if (response.error) {
+        const errorMessage = typeof response.error === "string" ? response.error : "Error hogya oh raba raba";
+        toast.error(errorMessage)
+        return;
+      }
+
+      onOpen("manageMembers", { server: response.success?.updatedServer })
+
+    } catch (err) {
+      toast.error("Try again")
+    } finally {
+      setIsLoading("")
+    }
+  }
 
   const handledeleteUser = async (memberId: string) => {
     try {
@@ -76,18 +100,15 @@ export function ManageMembers() {
         toast.error(errorMessage)
         return;
       }
-
-      //@ts-ignore
-      onOpen("manageMembers", { server: response?.success?.server })
-      console.log(response.success?.server)
+      onOpen("manageMembers", { server: response.success?.server })
 
     } catch (error) {
       toast.error("try again")
+      console.log(error)
     } finally {
       setIsLoading("")
     }
   }
-
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -112,7 +133,7 @@ export function ManageMembers() {
                       <h3>{member.name}</h3>
                       {member.role === "ADMIN"
                         ? (<ShieldAlertIcon size={15} className="text-red-500" />)
-                        : member.role === "MODERATOR" && (<Plus size={15} className="text-muted-foreground" />)
+                        : member.role === "MODERATOR" && (<Shield size={15} className="text-muted-foreground" />)
                       }
                     </div>
                     <p className="text-muted-foreground text-sm">{member.email}</p>
@@ -130,7 +151,7 @@ export function ManageMembers() {
                             <DropdownMenuSubContent className="border-secondary">
                               {
                                 membersRole.map((item) => (
-                                  <DropdownMenuItem className="gap-2" >{item.icon}{item.role}</DropdownMenuItem>
+                                  <DropdownMenuItem className="gap-2" onClick={() => handleRoleUpdates({ memberId: member.userId, role: item.value, errorStateId: member.id })} >{item.icon}{item.role}</DropdownMenuItem>
                                 ))
                               }
                             </DropdownMenuSubContent>
