@@ -7,6 +7,7 @@ import { ServerSettings } from "./modals/ServerSettings";
 import { InviteModal } from "./modals/InviteModal";
 import { CustomizeServer } from "@/components/modals/CustomizeServer"
 import { ManageMembers } from "./modals/ManageMembers";
+import { CreateChannels } from "./modals/CreateChannels";
 
 export const ModalProvider = () => {
 
@@ -26,6 +27,7 @@ export const ModalProvider = () => {
       {isOpen && type === "inviteModal" && <InviteModal />}
       {isOpen && type === "serverSettings" && <ServerSettings />}
       {isOpen && type === "manageMembers" && <ManageMembers />}
+      {isOpen && type === "createChannels" && <CreateChannels />}
     </>
   )
 }

@@ -81,7 +81,7 @@ export function CustomizeServer() {
     <Dialog open={isModalOpen} onOpenChange={handleClose} >
       <DialogContent className="w-[350px] sm:w-[550px] flex flex-col items-center border-secondary">
         <DialogHeader>
-          <DialogTitle>Customize your Server</DialogTitle>
+          <DialogTitle className="font-bold text-3xl text-center">Customize your Server</DialogTitle>
           <DialogDescription>
             Embark on an exciting journey by giving an interesting name and image to your server
           </DialogDescription>

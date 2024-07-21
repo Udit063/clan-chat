@@ -60,7 +60,10 @@ export const ServerButtons = ({ server, userRole }: ServerButtonsProps) => {
         }
         {
           userRole !== "GUEST" &&
-          <DropdownMenuItem className="flex w-full justify-between items-center p-2 my-1 cursor-pointer group ">
+          <DropdownMenuItem
+            className="flex w-full justify-between items-center p-2 my-1 cursor-pointer group "
+            onClick={() => onOpen("createChannels", { server })}
+          >
             <div className="group-hover:text-blue-500">Create Channel</div>
             <PlusCircle size={20} className="group-hover:text-blue-500" />
           </DropdownMenuItem>
