@@ -35,12 +35,14 @@ import { ChannelType } from "@prisma/client"
 import axios from "axios";
 import qs from "query-string"
 import { useParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 export function CreateChannels() {
 
   const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createChannels";
   const params = useParams()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof channelSchema>>({
     resolver: zodResolver(channelSchema),
@@ -68,6 +70,7 @@ export function CreateChannels() {
       }
       form.reset()
       onClose()
+      router.refresh()
     } catch (err) {
       console.log(err);
       toast.error("try again")
