@@ -10,6 +10,7 @@ import { ManageMembers } from "./modals/ManageMembers";
 import { CreateChannels } from "./modals/CreateChannels";
 import { DeleteServer } from "./modals/DeleteServer";
 import { LeaveServer } from "./modals/LeaveServer";
+import { DeleteChannel } from "./modals/DeleteChannel";
 
 export const ModalProvider = () => {
 
@@ -32,6 +33,7 @@ export const ModalProvider = () => {
       {isOpen && type === "createChannels" && <CreateChannels />}
       {isOpen && type === "deleteServer" && <DeleteServer />}
       {isOpen && type === "leaveServer" && <LeaveServer />}
+      {isOpen && type === "deleteChannel" && <DeleteChannel />}
     </>
   )
 }
