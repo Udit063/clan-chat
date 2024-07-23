@@ -36,10 +36,11 @@ import axios from "axios";
 import qs from "query-string"
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export function CreateChannels() {
 
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, data, type } = useModal();
   const isModalOpen = isOpen && type === "createChannels";
   const params = useParams()
   const router = useRouter();
@@ -53,6 +54,12 @@ export function CreateChannels() {
   })
 
   const isLoading = form.formState.isSubmitting;
+
+  useEffect(() => {
+    if (data.channelType) {
+      form.setValue('type', data.channelType);
+    }
+  }, [data.channelType, form]);
 
 
   const onSubmit = async (values: z.infer<typeof channelSchema>) => {

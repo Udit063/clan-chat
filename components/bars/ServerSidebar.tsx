@@ -5,7 +5,8 @@ import { ChannelType, MemberRole } from "@prisma/client";
 import { ServerSearch } from "../ServerSearch";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Hash, Headset, ShieldAlert, Shield, Video, User } from "lucide-react";
-import { ChannelNavigator } from "../ChannelNavigator";
+import { ChannelsNavigator } from "../ChannelsNavigator";
+import { MembersNavigator } from "../MembersNavigator";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -47,7 +48,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
       <div className="w-full flex items-center justify-center">
         <ServerButtons server={server} userRole={userRole} />
       </div>
-      <ScrollArea className="px-3 h-[95%] mb-4">
+      <ScrollArea className="px-3 h-[95%] ">
         <div className="mt-3">
           <ServerSearch
             data={[
@@ -92,11 +93,11 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
 
         </div>
         <div className="border-t mt-4 border-t-zinc-700">
-          <ChannelNavigator
+          <ChannelsNavigator
+            userRole={userRole}
             data={[
               {
                 label: "Text Channels",
-                type: "channel",
                 channelType: ChannelType.TEXT,
                 data: textChannels.map((channel) => ({
                   name: channel.name,
@@ -106,7 +107,6 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
               },
               {
                 label: "Audio Channels",
-                type: "channel",
                 channelType: ChannelType.AUDIO,
                 data: audioChannels.map((channel) => ({
                   name: channel.name,
@@ -116,7 +116,6 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
               },
               {
                 label: "Video Channels",
-                type: "channel",
                 channelType: ChannelType.VIDEO,
                 data: videoChannels.map((channel) => ({
                   name: channel.name,
@@ -124,19 +123,11 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
                   icon: iconsMap[channel.type],
                 }))
               },
-              {
-                label: "Members",
-                type: "member",
-                data: members.map((member) => ({
-                  name: member.user.name,
-                  id: member.id,
-                  icon: roleIconsMap[member.role]
-                }))
-              }
             ]}
-
           />
-
+        </div>
+        <div className="border-t my-4  border-t-zinc-700">
+          <MembersNavigator server={server} userRole={userRole} />
         </div>
       </ScrollArea>
     </div>

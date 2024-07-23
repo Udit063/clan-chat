@@ -78,8 +78,8 @@ export function ManageMembers() {
         toast.error(errorMessage)
         return;
       }
-
-      onOpen("manageMembers", { server: response.success?.updatedServer })
+      router.refresh()
+      onClose()
 
     } catch (err) {
       toast.error("Try again")
