@@ -3,8 +3,9 @@ import { ServerButtons } from "../ServerButtons"
 import { redirect } from "next/navigation";
 import { ChannelType, MemberRole } from "@prisma/client";
 import { ServerSearch } from "../ServerSearch";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Hash, Headset, ShieldAlert, Shield, Video } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Hash, Headset, ShieldAlert, Shield, Video, User } from "lucide-react";
+import { ChannelNavigator } from "../ChannelNavigator";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -27,15 +28,15 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
   const userRole = server.members.find((member) => member.userId === userId)?.role
 
   const iconsMap = {
-    [ChannelType.TEXT]: <Hash size={10} />,
-    [ChannelType.AUDIO]: <Headset size={10} />,
-    [ChannelType.VIDEO]: <Video size={10} />
+    [ChannelType.TEXT]: <Hash size={15} />,
+    [ChannelType.AUDIO]: <Headset size={15} />,
+    [ChannelType.VIDEO]: <Video size={15} />
   }
 
   const roleIconsMap = {
-    [MemberRole.ADMIN]: <ShieldAlert size={10} />,
-    [MemberRole.MODERATOR]: <Shield size={10} />,
-    [MemberRole.GUEST]: null
+    [MemberRole.ADMIN]: <ShieldAlert size={15} />,
+    [MemberRole.MODERATOR]: <Shield size={15} />,
+    [MemberRole.GUEST]: <User size={15} />
   }
 
   if (userRole !== "ADMIN" && userRole !== "MODERATOR" && userRole !== "GUEST") {
@@ -46,7 +47,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
       <div className="w-full flex items-center justify-center">
         <ServerButtons server={server} userRole={userRole} />
       </div>
-      <ScrollArea className="px-3 flex-1">
+      <ScrollArea className="px-3 h-[95%] mb-4">
         <div className="mt-3">
           <ServerSearch
             data={[
@@ -88,6 +89,54 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
               }
             ]}
           />
+
+        </div>
+        <div className="border-t mt-4 border-t-zinc-700">
+          <ChannelNavigator
+            data={[
+              {
+                label: "Text Channels",
+                type: "channel",
+                channelType: ChannelType.TEXT,
+                data: textChannels.map((channel) => ({
+                  name: channel.name,
+                  id: channel.id,
+                  icon: iconsMap[channel.type],
+                }))
+              },
+              {
+                label: "Audio Channels",
+                type: "channel",
+                channelType: ChannelType.AUDIO,
+                data: audioChannels.map((channel) => ({
+                  name: channel.name,
+                  id: channel.id,
+                  icon: iconsMap[channel.type],
+                }))
+              },
+              {
+                label: "Video Channels",
+                type: "channel",
+                channelType: ChannelType.VIDEO,
+                data: videoChannels.map((channel) => ({
+                  name: channel.name,
+                  id: channel.id,
+                  icon: iconsMap[channel.type],
+                }))
+              },
+              {
+                label: "Members",
+                type: "member",
+                data: members.map((member) => ({
+                  name: member.user.name,
+                  id: member.id,
+                  icon: roleIconsMap[member.role]
+                }))
+              }
+            ]}
+
+          />
+
         </div>
       </ScrollArea>
     </div>

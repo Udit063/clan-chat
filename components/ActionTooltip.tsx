@@ -21,7 +21,7 @@ export function ActionTooltip({ label, children, side, align }: ActionTooltipPro
         <TooltipTrigger asChild>
           {children}
         </TooltipTrigger>
-        <TooltipContent className="border-none bg-black text-white dark:bg-emerald-500 dark:text-black rounded-s" side={side} align={align}>
+        <TooltipContent className="border-none bg-black text-white dark:bg-emerald-500 dark:text-black" side={side} align={align}>
           <p className="font-semibold text-sm capitalize">{label.toLowerCase()}</p>
         </TooltipContent>
       </Tooltip>

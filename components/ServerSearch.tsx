@@ -68,7 +68,7 @@ export const ServerSearch = ({ data }: ServerSearchProps) => {
           {data.map(({ label, type, data }) => {
             if (!data?.length) return null;
             return (
-              <>
+              <div key={label}>
                 <CommandSeparator />
                 <CommandGroup key={label} heading={label}>
                   {data.map(({ id, name, icon }) => (
@@ -78,7 +78,7 @@ export const ServerSearch = ({ data }: ServerSearchProps) => {
                     </CommandItem>
                   ))}
                 </CommandGroup>
-              </>
+              </div>
             )
           })}
         </CommandList>
