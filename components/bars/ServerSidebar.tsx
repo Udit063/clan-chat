@@ -29,15 +29,15 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
   const userRole = server.members.find((member) => member.userId === userId)?.role
 
   const iconsMap = {
-    [ChannelType.TEXT]: <Hash size={15} />,
-    [ChannelType.AUDIO]: <Headset size={15} />,
-    [ChannelType.VIDEO]: <Video size={15} />
+    [ChannelType.TEXT]: <Hash size={17} />,
+    [ChannelType.AUDIO]: <Headset size={17} />,
+    [ChannelType.VIDEO]: <Video size={17} />
   }
 
   const roleIconsMap = {
-    [MemberRole.ADMIN]: <ShieldAlert size={15} />,
-    [MemberRole.MODERATOR]: <Shield size={15} />,
-    [MemberRole.GUEST]: <User size={15} />
+    [MemberRole.ADMIN]: <ShieldAlert size={17} />,
+    [MemberRole.MODERATOR]: <Shield size={17} />,
+    [MemberRole.GUEST]: <User size={17} />
   }
 
   if (userRole !== "ADMIN" && userRole !== "MODERATOR" && userRole !== "GUEST") {

@@ -88,7 +88,7 @@ export function ManageMembers() {
     }
   }
 
-  const handledeleteUser = async (memberId: string) => {
+  const handleKickoutMember = async (memberId: string) => {
     try {
       setIsLoading(memberId);
       const response = await kickOutMember({ headId: user.id as string, serverId: server.id, memberId })
@@ -100,6 +100,8 @@ export function ManageMembers() {
         toast.error(errorMessage)
         return;
       }
+
+      router.refresh()
       onOpen("manageMembers", { server: response.success?.server })
 
     } catch (error) {
@@ -157,7 +159,7 @@ export function ManageMembers() {
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
-                        <DropdownMenuItem onClick={() => handledeleteUser(member.id)} className="gap-2"><Trash size={15} />Kick</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleKickoutMember(member.id)} className="gap-2"><Trash size={15} />Kick</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   }

@@ -1,5 +1,5 @@
 "use client"
-import { Edit, Lock, Plus, Trash2 } from "lucide-react";
+import { Lock, Plus, Trash2 } from "lucide-react";
 import { Label } from "./ui/label";
 import { ChannelType, MemberRole } from "@prisma/client";
 import { ActionTooltip } from "./ActionTooltip";
@@ -77,15 +77,10 @@ export const ChannelsNavigator = ({ userRole, data }: ChannelNavigatorProps) => 
                     <Lock size={15} className="text-zinc-700 group-hover:text-emerald-500" />
                   </ActionTooltip>
                 ) : userRole !== MemberRole.GUEST ? (
-                  <div className="flex gap-2">
-                    <ActionTooltip align="center" side="top" label="Edit">
-                      <Edit size={15} className="hidden group-hover:block text-emerald-800" />
+                  <div onClick={(event) => handleDelete(event, id)}>
+                    <ActionTooltip align="center" side="top" label="Delete">
+                      <Trash2 size={15} className="hidden group-hover:block text-emerald-800" />
                     </ActionTooltip>
-                    <div onClick={(event) => handleDelete(event, id)}>
-                      <ActionTooltip align="center" side="top" label="Delete">
-                        <Trash2 size={15} className="hidden group-hover:block text-emerald-800" />
-                      </ActionTooltip>
-                    </div>
                   </div>
                 ) : null}
               </div>

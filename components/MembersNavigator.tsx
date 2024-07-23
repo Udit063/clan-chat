@@ -6,6 +6,8 @@ import { MemberRole } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 import { ServerWithMembers } from "@/types"
+import { useSession } from "next-auth/react";
+import { UserButton } from "./UserButton";
 
 interface MembersNavigatorProps {
   server: ServerWithMembers;
@@ -17,13 +19,16 @@ export const MembersNavigator = ({ userRole, server }: MembersNavigatorProps) =>
   const { onOpen } = useModal()
 
   const roleIconsMap = {
-    [MemberRole.ADMIN]: <ShieldAlert size={15} />,
-    [MemberRole.MODERATOR]: <Shield size={15} />,
-    [MemberRole.GUEST]: <User size={15} />
+    [MemberRole.ADMIN]: <ShieldAlert size={17} className="text-rose-600" />,
+    [MemberRole.MODERATOR]: <Shield size={17} className="text-sky-600" />,
+    [MemberRole.GUEST]: <User size={17} />
   }
 
+  const session = useSession();
+  const user = session.data?.user
+
   const handleRouting = (id: string) => {
-    router.push(`users/conversations/${id}`)
+    router.replace(`/users/conversations/${id}`);
   }
 
   return (
@@ -41,18 +46,32 @@ export const MembersNavigator = ({ userRole, server }: MembersNavigatorProps) =>
         </div>
 
       </div>
-      {
-        server.members.map((member) => (
-          <div onClick={() => handleRouting(member.id)} className="flex items-center rounded-sm hover:shadow-sm hover:shadow-card my-1 px-3 py-2 cursor-pointer group w-full" key={member.id}>
-            <div className="flex items-center gap-3 ">
-              <div className="text-zinc-500 group-hover:text-emerald-500" >{roleIconsMap[member.role]}</div>
+      {server.members.map((member) =>
+        member.user.id !== user?.id ? (
+          <div
+            onClick={() => handleRouting(member.id)}
+            className="flex items-center rounded-sm hover:shadow-sm hover:shadow-card my-1 px-3 py-2 cursor-pointer group w-full"
+            key={member.id}
+          >
+            <div className="flex items-center gap-3 px-3">
+              <div>{roleIconsMap[member.role]}</div>
               <p className="text-zinc-500 group-hover:text-emerald-500">{member.user.name}</p>
             </div>
           </div>
+        ) : (
+          <div
+            className="flex items-center rounded-sm hover:shadow-sm hover:shadow-card my-1 px-3 py-2 cursor-pointer group w-full"
+            key={member.id}
+          >
+            <div className="flex items-center gap-3 px-3">
+              <div className="h-[24px] w-[24px] bg-neutral-800 flex text-sm text-primary items-center justify-center rounded-full">{user.name?.slice(0, 1)}</div>
+              <p className="text-zinc-500 group-hover:text-emerald-500">You</p>
+            </div>
+          </div>
 
-        ))
-      }
-    </div>
+        )
+      )}
+    </div >
   )
 }
 
