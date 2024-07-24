@@ -44,7 +44,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
     redirect("/")
   }
   return (
-    <div className="w-[300px] bg-[#08061A] h-screen gap-3">
+    <div className="w-[300px] bg-[#05040F] h-screen gap-3">
       <div className="w-full flex items-center justify-center">
         <ServerButtons server={server} userRole={userRole} />
       </div>

@@ -56,7 +56,7 @@ export const ServerSearch = ({ data }: ServerSearchProps) => {
 
   return (
     <>
-      <button onClick={() => setOpen(true)} className="group w-full gap-x-2 px-2 py-2 shadow-lg shadow-card rounded-md flex transition duration-200 items-center">
+      <button onClick={() => setOpen(true)} className="group w-full gap-x-2 px-2 py-2 border-b border-r border-l border-secondary rounded-md flex transition duration-200 items-center">
         <Search className="text-zinc-700 group-hover:text-zinc-500" />
         <p className="text-zinc-700 group-hover:text-zinc-500">Search</p>
         <kbd className="ml-auto gap-1 flex items-center justify-center bg-card font-medium px-2 text-sm text-zinc-500"><CommandIcon size={13} className="text-sm" />K</kbd>

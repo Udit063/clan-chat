@@ -24,7 +24,7 @@ export const ServerButtons = ({ server, userRole }: ServerButtonsProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-xl font-bold flex w-full justify-around items-center bg-card py-4 focus:outline-none">
+      <DropdownMenuTrigger className="text-xl font-bold flex w-full justify-around items-center shadow-sm shadow-stone-900 bg-card py-4 focus:outline-none">
         <div>{server.name}</div> <ChevronDown />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="border-none bg-neutral-800 w-[250px]">
