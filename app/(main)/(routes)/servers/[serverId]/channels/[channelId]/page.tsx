@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { ChannelHeader } from "@/components/channels/ChannelHeader";
+import { ChatInput } from "@/components/channels/ChatInput"
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
@@ -15,7 +16,7 @@ const ChannelsPage = async ({ params }: ChannelsPageProps) => {
   const session = await auth();
   const user = session?.user
 
-  if (!user || !user.id) {
+  if (!user || !user.id || !user.name) {
     return redirect("/login")
   }
 
@@ -33,6 +34,7 @@ const ChannelsPage = async ({ params }: ChannelsPageProps) => {
   return (
     <div>
       <ChannelHeader name={channel.name} type={channel.type} />
+      <ChatInput userId={user.id} serverId={params.serverId} channelId={params.channelId} username={user.name} />
     </div>
   )
 }
