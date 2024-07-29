@@ -4,14 +4,14 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModalProvider } from "@/components/modal-provider";
 import { SessionProvider } from 'next-auth/react';
-
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
+import { WebSocketProvider } from "@/components/socket-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Clan Chat",
-  description: "clan chat is an application to modernize the way chat applications work. We provide you with an excess of chat, audio and video call functionality along with the role based management of user",
+  description: "Clan Chat is an application to modernize the way chat applications work. We provide you with an excess of chat, audio and video call functionality along with role-based management of users",
 };
 
 export default function RootLayout({
@@ -31,7 +31,9 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <ModalProvider />
-              {children}
+              <WebSocketProvider>
+                {children}
+              </WebSocketProvider>
               <Toaster />
             </ThemeProvider>
           </SessionProvider>
@@ -40,3 +42,4 @@ export default function RootLayout({
     </html>
   );
 }
+
