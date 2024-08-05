@@ -20,11 +20,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return session;
     },
-    async jwt({ token }) {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id,
+          token.email = token.email
+      }
       return token;
     }
   },
   adapter: PrismaAdapter(db),
-  session: { strategy: "jwt", maxAge: 12 * 60 * 60 },
+  session: { strategy: "jwt", maxAge: 1 * 60 * 60 },
   ...authConfig,
 })

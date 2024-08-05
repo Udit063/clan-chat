@@ -4,6 +4,7 @@ import { ChatInput } from "@/components/channels/ChatInput"
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
+
 interface ChannelsPageProps {
   params: {
     serverId: string;
@@ -32,7 +33,7 @@ const ChannelsPage = async ({ params }: ChannelsPageProps) => {
   }
 
   return (
-    <div>
+    <div className="h-full flex flex-col justify-between">
       <ChannelHeader name={channel.name} type={channel.type} />
       <ChatInput userId={user.id} serverId={params.serverId} channelId={params.channelId} username={user.name} />
     </div>

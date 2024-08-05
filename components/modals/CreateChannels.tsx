@@ -108,7 +108,7 @@ export function CreateChannels() {
                   <FormItem className="w-full">
                     <FormLabel className="uppercase" htmlFor="name">Channel Name</FormLabel>
                     <FormControl>
-                      <Input className="w-full focus:ring-0 ring-offset-0 focus:ring-offset-0 outline-none focus:border-none " disabled={isLoading} placeholder="Name of your channel" {...field} />
+                      <Input className="w-full focus-visible:ring-transparent focus:ring-0 ring-offset-0 focus:ring-offset-0 outline-none focus:border-none " disabled={isLoading} placeholder="Name of your channel" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
