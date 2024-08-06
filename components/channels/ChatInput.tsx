@@ -29,13 +29,7 @@ export const ChatInput = ({ userId, username, serverId, channelId, token }: Chat
       sendMessage();
     }
   };
-  useEffect(() => {
-    if (ws) {
-      ws.onmessage = (event) => {
-        console.log(event);
-      };
-    }
-  }, [ws]);
+
 
   const sendMessage = () => {
     if (message.trim().length === 0) {

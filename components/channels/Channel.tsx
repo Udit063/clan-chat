@@ -4,8 +4,6 @@ import { ChannelHeader } from "@/components/channels/ChannelHeader";
 import { ChatInput } from "@/components/channels/ChatInput"
 import { ChannelType } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { useWebSocket } from "../socket-provider";
-import { useRouter } from "next/navigation";
 import { ChatsBody } from "./ChatsBody";
 
 interface ChannelProps {
@@ -18,15 +16,7 @@ interface ChannelProps {
 }
 
 export function Channel({ channelName, channelType, channelId, userId, serverId, username }: ChannelProps) {
-  const { ws } = useWebSocket()
-  const router = useRouter()
   const [token, setToken] = useState("")
-
-  useEffect(() => {
-    if (!ws) {
-      router.push("/home");
-    }
-  }, [ws, router]);
 
   useEffect(() => {
     const getToken = async () => {
@@ -43,7 +33,7 @@ export function Channel({ channelName, channelType, channelId, userId, serverId,
 
     <div className="h-full flex flex-col justify-between">
       <ChannelHeader name={channelName} type={channelType} />
-      <ChatsBody />
+      <ChatsBody channelId={channelId} serverId={serverId} />
       <ChatInput userId={userId} serverId={serverId} channelId={channelId} username={username} token={token} />
     </div>
 
