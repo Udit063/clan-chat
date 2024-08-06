@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { Channel } from "@/components/channels/Channel";
 import { ChannelHeader } from "@/components/channels/ChannelHeader";
 import { ChatInput } from "@/components/channels/ChatInput"
 import { db } from "@/lib/db";
@@ -33,9 +34,15 @@ const ChannelsPage = async ({ params }: ChannelsPageProps) => {
   }
 
   return (
-    <div className="h-full flex flex-col justify-between">
-      <ChannelHeader name={channel.name} type={channel.type} />
-      <ChatInput userId={user.id} serverId={params.serverId} channelId={params.channelId} username={user.name} />
+    <div className="h-full w-full">
+      <Channel
+        channelName={channel.name}
+        channelType={channel.type}
+        channelId={channel.id}
+        userId={user.id}
+        username={user.name}
+        serverId={params.serverId}
+      />
     </div>
   )
 }

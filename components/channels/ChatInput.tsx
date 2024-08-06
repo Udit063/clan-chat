@@ -13,13 +13,15 @@ interface ChatInputProps {
   serverId: string;
   channelId: string;
   username: string;
+  token: string;
 }
 
-export const ChatInput = ({ userId, username, serverId, channelId }: ChatInputProps) => {
+export const ChatInput = ({ userId, username, serverId, channelId, token }: ChatInputProps) => {
 
   const [message, setMessage] = useState<string>("")
-  const [token, setToken] = useState<null | string>(null)
   const { ws } = useWebSocket();
+
+
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -28,15 +30,12 @@ export const ChatInput = ({ userId, username, serverId, channelId }: ChatInputPr
     }
   };
   useEffect(() => {
-    const getToken = async () => {
-      console.log("called===")
-      const response = await axios.get("/api/get-token")
-      if (response.data) {
-        setToken(response.data)
-      }
+    if (ws) {
+      ws.onmessage = (event) => {
+        console.log(event);
+      };
     }
-    getToken()
-  }, [])
+  }, [ws]);
 
   const sendMessage = () => {
     if (message.trim().length === 0) {
@@ -46,6 +45,7 @@ export const ChatInput = ({ userId, username, serverId, channelId }: ChatInputPr
     if (!token) {
       toast.error("Try again in some time")
     }
+
     const payload = {
       token,
       userId,
