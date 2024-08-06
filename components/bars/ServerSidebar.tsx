@@ -48,7 +48,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
       <div className="w-full flex items-center justify-center">
         <ServerButtons server={server} userRole={userRole} />
       </div>
-      <ScrollArea className="px-3 h-[95%] ">
+      <ScrollArea className="px-3 h-[90%] ">
         <div className="mt-3">
           <ServerSearch
             data={[

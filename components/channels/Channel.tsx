@@ -33,7 +33,7 @@ export function Channel({ channelName, channelType, channelId, userId, serverId,
 
     <div className="h-full flex flex-col justify-between">
       <ChannelHeader name={channelName} type={channelType} />
-      <ChatsBody channelId={channelId} serverId={serverId} />
+      <ChatsBody channelId={channelId} serverId={serverId} activeUser={userId} />
       <ChatInput userId={userId} serverId={serverId} channelId={channelId} username={username} token={token} />
     </div>
 

@@ -55,14 +55,16 @@ export const ChatInput = ({ userId, username, serverId, channelId, token }: Chat
   };
 
   return (
-    <div className="h-14 flex items-center rounded-md border-none bg-background  ">
-      <Input type="text"
-        className="h-full border-none  bg-neutral-950 rounded-r-none w-full  focus-visible:ring-transparent "
-        placeholder="Type your message"
-        value={message}
-        onKeyDown={handleKeyDown}
-        onChange={(e) => setMessage(e.target.value)} />
-      <Button type="submit" className="bg-neutral-950 h-full rounded-l-none" onClick={sendMessage} variant="link"><Send className="text-white " /></Button>
+    <div className="h-16 w-full flex items-center rounded-md border-none bg-background  ">
+      <div className="flex w-full h-full">
+        <Input type="text"
+          className="h-full   border-none  bg-neutral-950 rounded-none focus-visible:ring-transparent "
+          placeholder="Type your message"
+          value={message}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setMessage(e.target.value)} />
+        <Button type="submit" className="bg-neutral-950 h-full rounded-l-none" onClick={sendMessage} variant="link"><Send className="text-white " /></Button>
+      </div>
     </div>
   );
 };

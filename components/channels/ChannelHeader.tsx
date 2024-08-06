@@ -28,7 +28,7 @@ export const ChannelHeader: React.FC<ChannelHeaderProps> = ({ name, type }) => {
   }, [ws]);
 
   return (
-    <div className="w-full flex items-center justify-between shadow-lg shadow-[#05040F] border-main py-3 px-8">
+    <div className="w-full h-16 flex items-center justify-between shadow-lg shadow-[#05040F] border-main py-3 px-8">
       <div className="flex items-center gap-2">
         {iconsMap[type]}
         <h1 className="text-3xl">{name}</h1>

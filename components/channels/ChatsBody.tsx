@@ -1,24 +1,36 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import qs from "query-string"
-import axios from "axios"
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { Skeleton } from "../ui/skeleton";
+import { ScrollArea } from "../ui/scroll-area";
+import { MessageBar } from "../MessageBar";
 
 interface ChatsBodyProps {
   serverId: string;
   channelId: string;
+  activeUser: string;
 }
 
-export function ChatsBody({ serverId, channelId }: ChatsBodyProps) {
+interface Message {
+  _id: string;
+  content: string;
+  userId: string;
+  username: string;
+  serverId: string;
+  channelId: string;
+  timestamp: number;
+  __v: number;
+}
 
-  const [messages, setMessages] = useState([])
-
+export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const getAllMessages = async () => {
       try {
-
-        const response = await axios.get(`http://localhost:3000/api/messages/${serverId}/${channelId}`)
+        const response = await axios.get(`http://localhost:3000/api/messages/${serverId}/${channelId}`);
         if (!response) {
           throw new Error('Network response was not ok');
         }
@@ -30,15 +42,59 @@ export function ChatsBody({ serverId, channelId }: ChatsBodyProps) {
     getAllMessages();
   }, [serverId, channelId]);
 
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
-    console.log(messages)
-  }, [messages])
+    scrollToBottom();
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  if (messages.length === 0) {
+    return (
+      <div className="h-full w-full flex flex-col gap-6 px-3 justify-center overflow-hidden">
+        <Skeleton className="h-6 w-2/3 sm:w-3/4" />
+        <Skeleton className="h-10 w-2/3 sm:w-1/2" />
+        <Skeleton className="h-6 w-2/3 sm:w-3/4 ml-auto" />
+        <Skeleton className="h-6 w-1/3 sm:w-3/4 ml-auto" />
+        <Skeleton className="h-6 w-2/3 sm:w-3/4" />
+        <Skeleton className="h-10 w-2/3 sm:w-1/2" />
+        <Skeleton className="h-6 w-2/3 sm:w-3/4 ml-auto" />
+        <Skeleton className="h-6 w-1/3 sm:w-3/4 ml-auto" />
+        <Skeleton className="h-6 w-2/3" />
+        <Skeleton className="h-10 w-2/3 sm:w-3/5" />
+        <Skeleton className="h-6 w-2/3 sm:w-3/5 ml-auto" />
+        <Skeleton className="h-12 w-2/3 ml-auto" />
+        <Skeleton className="h-6 w-2/3 ml-auto" />
+        <Skeleton className="h-6 w-2/3" />
+        <Skeleton className="h-10 w-2/3 ml-auto" />
+        <Skeleton className="h-6 w-2/3 ml-auto" />
+      </div>
+    );
+  }
 
   return (
-    <div className="h-full w-full text-4xl">
-      Hello Messages
+    <div className="h-5/6 w-full flex flex-col">
+      <ScrollArea className="mt-auto px-8">
+        {messages.map((message) => (
+          <MessageBar
+            id={message._id}
+            message={message.content}
+            userId={message.userId}
+            username={message.username}
+            time={message.timestamp}
+            activeUser={activeUser}
+          />
+        ))}
+        <div ref={chatContainerRef} />
+      </ScrollArea>
     </div>
-  )
-
-
+  );
 }
+
