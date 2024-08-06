@@ -5,6 +5,7 @@ import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
 import { ScrollArea } from "../ui/scroll-area";
 import { MessageBar } from "../MessageBar";
+import { useWebSocket } from "../socket-provider";
 
 interface ChatsBodyProps {
   serverId: string;
@@ -26,6 +27,16 @@ interface Message {
 export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const { ws } = useWebSocket();
+
+  useEffect(() => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.onmessage = (event) => {
+        const newMessage = JSON.parse(event.data);
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+      }
+    }
+  })
 
   useEffect(() => {
     const getAllMessages = async () => {

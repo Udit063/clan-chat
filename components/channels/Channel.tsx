@@ -1,14 +1,16 @@
-"use client"
+"use client";
+
 import axios from "axios";
 import { ChannelHeader } from "@/components/channels/ChannelHeader";
-import { ChatInput } from "@/components/channels/ChatInput"
+import { ChatInput } from "@/components/channels/ChatInput";
 import { ChannelType } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ChatsBody } from "./ChatsBody";
+import { useWebSocket } from "../socket-provider";
 
 interface ChannelProps {
   channelName: string;
-  channelType: ChannelType
+  channelType: ChannelType;
   channelId: string;
   userId: string;
   serverId: string;
@@ -16,26 +18,51 @@ interface ChannelProps {
 }
 
 export function Channel({ channelName, channelType, channelId, userId, serverId, username }: ChannelProps) {
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
+  const { ws } = useWebSocket();
+
+  const sendJoinMessage = useCallback(() => {
+    if (ws && ws.readyState === WebSocket.OPEN && token) {
+      const joinMessage = {
+        type: "join",
+        token,
+        serverId,
+        channelId,
+      };
+      ws.send(JSON.stringify(joinMessage));
+      console.log("server joined");
+    }
+  }, [ws, token, serverId, channelId]);
 
   useEffect(() => {
     const getToken = async () => {
-      console.log("called===")
-      const response = await axios.get("/api/get-token")
+      console.log("called===");
+      const response = await axios.get("/api/get-token");
       if (response.data) {
-        setToken(response.data)
+        setToken(response.data);
       }
+    };
+    getToken();
+  }, []);
+
+  useEffect(() => {
+    sendJoinMessage();
+  }, [sendJoinMessage]);
+
+  useEffect(() => {
+    if (ws) {
+      ws.onopen = () => {
+        sendJoinMessage();
+      };
     }
-    getToken()
-  }, [])
+  }, [ws, sendJoinMessage]);
 
   return (
-
     <div className="h-full flex flex-col justify-between">
       <ChannelHeader name={channelName} type={channelType} />
       <ChatsBody channelId={channelId} serverId={serverId} activeUser={userId} />
       <ChatInput userId={userId} serverId={serverId} channelId={channelId} username={username} token={token} />
     </div>
-
-  )
+  );
 }
+
