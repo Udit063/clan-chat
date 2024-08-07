@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 import { ServerWithMembers } from "@/types"
 import { useSession } from "next-auth/react";
-import { UserButton } from "./UserButton";
 
 interface MembersNavigatorProps {
   server: ServerWithMembers;
@@ -27,9 +26,6 @@ export const MembersNavigator = ({ userRole, server }: MembersNavigatorProps) =>
   const session = useSession();
   const user = session.data?.user
 
-  const handleRouting = (id: string) => {
-    router.replace(`/users/conversations/${id}`);
-  }
 
   return (
     <div>
@@ -49,8 +45,7 @@ export const MembersNavigator = ({ userRole, server }: MembersNavigatorProps) =>
       {server.members.map((member) =>
         member.user.id !== user?.id ? (
           <div
-            onClick={() => handleRouting(member.id)}
-            className="flex items-center rounded-sm hover:shadow-sm hover:shadow-card my-1 px-3 py-2 cursor-pointer group w-full"
+            className="flex items-center rounded-sm hover:shadow-sm hover:shadow-card my-1 px-3 py-2 cursor-default group w-full"
             key={member.id}
           >
             <div className="flex items-center gap-3 px-3">
@@ -60,7 +55,7 @@ export const MembersNavigator = ({ userRole, server }: MembersNavigatorProps) =>
           </div>
         ) : (
           <div
-            className="flex items-center rounded-sm hover:shadow-sm hover:shadow-card my-1 px-3 py-2 cursor-pointer group w-full"
+            className="flex items-center rounded-sm hover:shadow-sm hover:shadow-card my-1 px-3 py-2 cursor-default group w-full"
             key={member.id}
           >
             <div className="flex items-center gap-3 px-3">
