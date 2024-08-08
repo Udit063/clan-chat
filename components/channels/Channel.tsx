@@ -60,8 +60,14 @@ export function Channel({ channelName, channelType, channelId, userId, serverId,
   return (
     <div className="h-full flex flex-col justify-between">
       <ChannelHeader name={channelName} type={channelType} />
-      <ChatsBody channelId={channelId} serverId={serverId} activeUser={userId} />
-      <ChatInput userId={userId} serverId={serverId} channelId={channelId} username={username} token={token} />
+      {channelType === ChannelType.TEXT &&
+
+        <ChatsBody channelId={channelId} serverId={serverId} activeUser={userId} />
+      }
+      {
+        channelType === ChannelType.TEXT &&
+        <ChatInput userId={userId} serverId={serverId} channelId={channelId} username={username} token={token} />
+      }
     </div>
   );
 }
