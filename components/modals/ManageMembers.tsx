@@ -153,7 +153,10 @@ export function ManageMembers() {
                             <DropdownMenuSubContent className="border-secondary">
                               {
                                 membersRole.map((item) => (
-                                  <DropdownMenuItem className="gap-2" onClick={() => handleRoleUpdates({ memberId: member.userId, role: item.value, errorStateId: member.id })} >{item.icon}{item.role}</DropdownMenuItem>
+                                  <DropdownMenuItem key={item.value} className="gap-2"
+                                    onClick={() => handleRoleUpdates({ memberId: member.userId, role: item.value, errorStateId: member.id })} >
+                                    {item.icon}{item.role}
+                                  </DropdownMenuItem>
                                 ))
                               }
                             </DropdownMenuSubContent>

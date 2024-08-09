@@ -95,6 +95,7 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
       <ScrollArea className="mt-auto px-8">
         {messages.map((message) => (
           <MessageBar
+            key={message._id}
             id={message._id}
             message={message.content}
             userId={message.userId}
