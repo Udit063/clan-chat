@@ -24,11 +24,11 @@ interface WebSocketProviderProps {
 export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const socketServerUrl = process.env.environment === "development" ? 'ws://localhost:8080' : "http://clanchatworker-production.up.railway.app"
+  const socketServerUrl = process.env.NODE_ENV === "development" ? 'ws://localhost:8080' : "http://clanchatworker-production.up.railway.app"
 
   useEffect(() => {
     const connectSocket = () => {
-      const socket = new WebSocket('ws://localhost:8080');
+      const socket = new WebSocket(socketServerUrl);
 
       socket.onopen = () => {
         console.log('WebSocket connected');
