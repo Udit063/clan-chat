@@ -41,7 +41,7 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
   useEffect(() => {
     const getAllMessages = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/messages/${serverId}/${channelId}`);
+        const response = await axios.get(`https://clan-chat-five.vercel.app/api/messages/${serverId}/${channelId}`);
         if (!response) {
           throw new Error('Network response was not ok');
         }
