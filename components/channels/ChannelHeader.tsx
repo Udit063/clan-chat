@@ -33,13 +33,16 @@ export const ChannelHeader: React.FC<ChannelHeaderProps> = ({ name, type }) => {
         {iconsMap[type]}
         <h1 className="text-3xl">{name}</h1>
       </div>
-      <div >
-        {
-          isConnected
-            ? (<Badge>Realtime Updates</Badge>)
-            : (<Badge variant="destructive">No realtime updates</Badge>)
-        }
-      </div>
+      {
+        type === ChannelType.TEXT &&
+        <div >
+          {
+            isConnected
+              ? (<Badge>Realtime Updates</Badge>)
+              : (<Badge variant="destructive">No realtime updates</Badge>)
+          }
+        </div>
+      }
     </div>
   );
 };

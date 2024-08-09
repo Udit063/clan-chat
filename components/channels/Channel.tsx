@@ -7,6 +7,7 @@ import { ChannelType } from "@prisma/client";
 import { useEffect, useState, useCallback } from "react";
 import { ChatsBody } from "./ChatsBody";
 import { useWebSocket } from "../socket-provider";
+import { MediaRoom } from "../media-room";
 
 interface ChannelProps {
   channelName: string;
@@ -60,9 +61,25 @@ export function Channel({ channelName, channelType, channelId, userId, serverId,
   return (
     <div className="h-full flex flex-col justify-between">
       <ChannelHeader name={channelName} type={channelType} />
-      {channelType === ChannelType.TEXT &&
-
-        <ChatsBody channelId={channelId} serverId={serverId} activeUser={userId} />
+      {channelType === ChannelType.TEXT ?
+        (<ChatsBody channelId={channelId} serverId={serverId} activeUser={userId} />)
+        : (
+          channelType === ChannelType.AUDIO
+            ? (<MediaRoom
+              chatId={`${serverId}${channelId}`}
+              audio={true}
+              video={false}
+              userId={userId}
+            />)
+            : (
+              <MediaRoom
+                chatId={`${serverId}${channelId}`}
+                audio={true}
+                video={true}
+                userId={userId}
+              />
+            )
+        )
       }
       {
         channelType === ChannelType.TEXT &&
