@@ -24,7 +24,7 @@ interface WebSocketProviderProps {
 export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const socketServerUrl = process.env.NODE_ENV === "development" ? 'ws://localhost:8080' : "http://clanchatworker-production.up.railway.app"
+  const socketServerUrl = process.env.NODE_ENV === "development" ? 'ws://localhost:8080' : "clanchatworker-production.up.railway.app"
 
   useEffect(() => {
     const connectSocket = () => {
