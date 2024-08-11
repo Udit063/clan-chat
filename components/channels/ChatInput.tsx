@@ -51,6 +51,7 @@ export const ChatInput = ({ userId, username, serverId, channelId, token }: Chat
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify(payload));
       setMessage("");
+      console.log("message sent")
     }
   };
 

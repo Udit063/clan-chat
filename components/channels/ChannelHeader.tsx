@@ -24,7 +24,8 @@ export const ChannelHeader: React.FC<ChannelHeaderProps> = ({ name, type }) => {
     if (!ws) return;
     ws.onmessage = (response) => {
       console.log(response.data)
-    };
+    }
+    console.log(ws)
   }, [ws]);
 
   return (
