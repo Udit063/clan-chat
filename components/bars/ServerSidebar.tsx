@@ -1,4 +1,5 @@
 import { getServerAllDetails } from "@/data/server";
+import Link from "next/link";
 import { ServerButtons } from "../ServerButtons"
 import { redirect } from "next/navigation";
 import { ChannelType, MemberRole } from "@prisma/client";
@@ -128,6 +129,13 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
         </div>
         <div className="border-t my-4  border-t-zinc-700">
           <MembersNavigator server={server} userRole={userRole} />
+        </div>
+        <div className="absolute bottom-0 px-3">
+          If messages are not sharing, or something else happens please reload , and please don't f*** us as we
+          are hosted using free servers next js on{" "}
+          <Link href="https://vercel.com" className="text-sky-400">Vercel</Link>
+          {" "}and web-socket server on
+          {" "}<Link href="https://railway.app" className="text-sky-400">Railway</Link>
         </div>
       </ScrollArea>
     </div>
