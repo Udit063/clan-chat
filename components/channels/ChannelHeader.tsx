@@ -21,30 +21,10 @@ export const ChannelHeader: React.FC<ChannelHeaderProps> = ({ name, type }) => {
   const { ws, isConnected } = useWebSocket();
 
   useEffect(() => {
-    if (ws) {
-      console.log('WebSocket instance:', ws);
-      console.log('WebSocket readyState:', ws.readyState);
-
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.onmessage = (response) => {
-          console.log('Received message:', response.data);
-        };
-      }
-
-      ws.onclose = (event) => {
-        console.log('WebSocket closed:', event.code, event.reason);
-      };
-
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
-
-      return () => {
-        ws.onmessage = null;
-        ws.onclose = null;
-        ws.onerror = null;
-      };
-    }
+    if (!ws) return;
+    ws.onmessage = (response) => {
+      console.log(response.data)
+    };
   }, [ws]);
 
   return (
@@ -56,11 +36,7 @@ export const ChannelHeader: React.FC<ChannelHeaderProps> = ({ name, type }) => {
       {
         type === ChannelType.TEXT &&
         <div >
-          {
-            isConnected
-              ? (<Badge>Realtime Updates</Badge>)
-              : (<Badge variant="destructive">No realtime updates</Badge>)
-          }
+          <Badge>Realtime Updates</Badge>
         </div>
       }
     </div>
