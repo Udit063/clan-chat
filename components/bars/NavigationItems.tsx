@@ -11,7 +11,7 @@ interface NavigationItemsProps {
   key: string;
 }
 
-export const NavigationItems = ({ key, id, name, imageUrl }: NavigationItemsProps) => {
+export const NavigationItems = ({ key, id, imageUrl }: NavigationItemsProps) => {
 
   const router = useRouter();
   const params = useParams();

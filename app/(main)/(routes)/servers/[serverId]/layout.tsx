@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { ServerSidebar } from "@/components/bars/ServerSidebar";
+import { SheetSidebar } from "@/components/bars/SheetSidebar";
 import { getServer } from "@/data/server";
 import { redirect } from "next/navigation";
 
@@ -22,6 +23,7 @@ const ServerIdLayout = async ({
       <div className="hidden h-full w-[300px] md:flex flex-col ">
         <ServerSidebar serverId={server.id} userId={userId} />
       </div>
+      <SheetSidebar serverId={server.id} userId={userId} />
       <div className="w-full h-full">
         {children}
       </div>
