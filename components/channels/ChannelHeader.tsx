@@ -21,11 +21,30 @@ export const ChannelHeader: React.FC<ChannelHeaderProps> = ({ name, type }) => {
   const { ws, isConnected } = useWebSocket();
 
   useEffect(() => {
-    if (!ws) return;
-    ws.onmessage = (response) => {
-      console.log(response.data)
+    if (ws) {
+      console.log('WebSocket instance:', ws);
+      console.log('WebSocket readyState:', ws.readyState);
+
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.onmessage = (response) => {
+          console.log('Received message:', response.data);
+        };
+      }
+
+      ws.onclose = (event) => {
+        console.log('WebSocket closed:', event.code, event.reason);
+      };
+
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+
+      return () => {
+        ws.onmessage = null;
+        ws.onclose = null;
+        ws.onerror = null;
+      };
     }
-    console.log(ws)
   }, [ws]);
 
   return (
