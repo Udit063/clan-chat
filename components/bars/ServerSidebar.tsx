@@ -131,11 +131,12 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
           <MembersNavigator server={server} userRole={userRole} />
         </div>
         <div className="absolute bottom-0 px-3">
-          If messages are not sharing, or something else happens please reload , and please don't f*** us as we
+          If messages are not sharing, or something else happens please reload , and if you find any vulnerability please
+          {" "}<Link className="text-sky-600" href="mailto:ankursharma1493@gmail.com">mail me</Link> as we
           are hosted using free servers next js on{" "}
-          <Link href="https://vercel.com" className="text-sky-400">Vercel</Link>
+          <Link href="https://vercel.com" className="text-sky-600">Vercel</Link>
           {" "}and web-socket server on
-          {" "}<Link href="https://railway.app" className="text-sky-400">Railway</Link>
+          {" "}<Link href="https://railway.app" className="text-sky-600">Railway</Link>
         </div>
       </ScrollArea>
     </div>
