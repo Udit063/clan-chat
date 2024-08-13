@@ -12,6 +12,16 @@ const font = Open_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Clan Chat",
   description: "Clan Chat is an application to modernize the way chat applications work. We provide you with an excess of chat, audio and video call functionality along with role-based management of users",
+  openGraph: {
+    images: [
+      {
+        url: "https://media.licdn.com/dms/image/v2/D5622AQHIEOsIdgQZmQ/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1723061217248?e=1726704000&v=beta&t=6nRCuDM3RjWtblnibOGcm0UYBQN2tD1OuOxXbEXgh7U",
+        width: 1200,
+        height: 630,
+        alt: "Clan Chat preview",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
