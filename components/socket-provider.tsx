@@ -58,7 +58,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     return () => {
       ws?.close();
     };
-  }, []);
+  }, [socketServerUrl, ws]);
 
   return (
     <WebSocketContext.Provider value={{ ws, isConnected }}>
