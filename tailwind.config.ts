@@ -1,19 +1,15 @@
 const { withUt } = require("uploadthing/tw");
-const defaultTheme = require("tailwindcss/defaultTheme");
-const colors = require("tailwindcss/colors");
-const {
-  default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette");
+import type { Config } from "tailwindcss"
 
-/** @type {import('tailwindcss').Config} */
 const config = withUt({
+  darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
-  darkMode: ["class"],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -80,17 +76,7 @@ const config = withUt({
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), addVariablesForColors],
-});
+  plugins: [require("tailwindcss-animate")],
+}) satisfies Config
 
-function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
-  addBase({
-    ":root": newVars,
-  });
-}
-
-module.exports = config;
+export default config
