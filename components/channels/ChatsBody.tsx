@@ -30,7 +30,9 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
   const { ws } = useWebSocket();
 
   useEffect(() => {
+    console.log('kya hum chudenge guru??')
     if (ws && ws.readyState === WebSocket.OPEN) {
+      console.log("chud gaye guru")
       ws.onmessage = (event) => {
         const newMessage = JSON.parse(event.data);
         console.log("lalalalalalal------------------------------------")
