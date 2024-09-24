@@ -41,7 +41,7 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
         }
       }
     }
-  }, [])
+  }, [ws, channelId, serverId])
 
   useEffect(() => {
     const getAllMessages = async () => {
