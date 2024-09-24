@@ -32,8 +32,11 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
   useEffect(() => {
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.onmessage = (event) => {
+        console.log("message aayaa")
         const newMessage = JSON.parse(event.data);
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        if (newMessage.channelId == channelId) {
+          setMessages((prevMessages) => [...prevMessages, newMessage]);
+        }
       }
     }
   }, [])
@@ -109,4 +112,3 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
     </div>
   );
 }
-
