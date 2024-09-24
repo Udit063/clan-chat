@@ -36,7 +36,7 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       }
     }
-  }, [ws, channelId, serverId])
+  }, [])
 
   useEffect(() => {
     const getAllMessages = async () => {
