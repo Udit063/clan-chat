@@ -33,7 +33,9 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.onmessage = (event) => {
         const newMessage = JSON.parse(event.data);
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        if (serverId === event.data?.serverId, channelId === event.data?.channelId) {
+          setMessages((prevMessages) => [...prevMessages, newMessage]);
+        }
       }
     }
   }, [])
