@@ -1,7 +1,7 @@
-"use client"
-import { useState, useTransition } from "react"
-import { CardWrapper } from "./CardWrapper"
-import { Button } from "@/components/ui/button"
+"use client";
+import { useState, useTransition } from "react";
+import { CardWrapper } from "./CardWrapper";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,39 +9,42 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { loginSchema } from "@/schemas/login"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { FormError } from "./FormError"
-import { login } from "@/actions/login"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { loginSchema } from "@/schemas/login";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { FormError } from "./FormError";
+import { login } from "@/actions/login";
 
 export const Login = () => {
-
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: ""
+      password: "",
     },
-  })
+  });
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    setError("")
+    setError("");
     startTransition(() => {
-      login(values)
-        .then((data) => {
-          setError(data?.error ?? "");
-        })
+      login(values).then((data) => {
+        setError(data?.error ?? "");
+      });
     });
-  }
+  };
 
   return (
     <div className="w-screen min-h-screen h-full flex justify-center items-center z-10">
-      <CardWrapper headerLabel="Welcome Back" backLabel="Don't have an account, register now" backLabelHref="/register" description="Login to your account to get back to your conversation">
+      <CardWrapper
+        headerLabel="Welcome Back"
+        backLabel="Don't have an account, register now"
+        backLabelHref="/register"
+        description="Login to your account to get back to your conversation"
+      >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -51,7 +54,7 @@ export const Login = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder=" ankursharma1493@gmail.com" {...field} />
+                    <Input placeholder=" uditkapoor060@gmail.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -64,17 +67,23 @@ export const Login = () => {
                 <FormItem>
                   <FormLabel>password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="How dare you ask me my password" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="How dare you ask me my password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormError message={error} />
-            <Button disabled={isPending} className="w-full" type="submit">Login</Button>
+            <Button disabled={isPending} className="w-full" type="submit">
+              Login
+            </Button>
           </form>
         </Form>
       </CardWrapper>
     </div>
-  )
-}
+  );
+};

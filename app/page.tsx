@@ -1,7 +1,15 @@
+import { Navbar } from "@/components/Navbar";
+import Landing from "@/components/Landing";
+
 export default function Home() {
   return (
-    <main>
-      <p className="text-5xl text-second_text">Hello Clanchat here</p>
-    </main>
+    <div className="h-screen overflow-hidden">
+      <Navbar />
+      <div className="flex items-center justify-center drop-shadow-lg">
+        <div className="w-[90%]">
+          <Landing />
+        </div>
+      </div>
+    </div>
   );
 }

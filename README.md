@@ -1,6 +1,5 @@
 # Clan Chat
 
-## Chat-server--> https://github.com/Ankur1493/clan_chat_worker
 
 Clan-Chat is a Discord-like application inspired by a YouTube tutorial on
 creating a Discord clone using Next.js. Initially, the tutorial utilized

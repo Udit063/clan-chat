@@ -1,6 +1,6 @@
 import { getServerAllDetails } from "@/data/server";
 import Link from "next/link";
-import { ServerButtons } from "../ServerButtons"
+import { ServerButtons } from "../ServerButtons";
 import { redirect } from "next/navigation";
 import { ChannelType, MemberRole } from "@prisma/client";
 import { ServerSearch } from "../ServerSearch";
@@ -14,35 +14,48 @@ interface ServerSidebarProps {
   userId: string;
 }
 
-export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) => {
-
-  const server = await getServerAllDetails(serverId)
+export const ServerSidebar = async ({
+  serverId,
+  userId,
+}: ServerSidebarProps) => {
+  const server = await getServerAllDetails(serverId);
   if (!server) {
-    redirect("/")
+    redirect("/");
   }
-  const textChannels = server?.channels.filter((channel) => channel.type === ChannelType.TEXT);
-  const audioChannels = server?.channels.filter((channel) => channel.type === ChannelType.AUDIO);
-  const videoChannels = server?.channels.filter((channel) => channel.type === ChannelType.VIDEO);
-
+  const textChannels = server?.channels.filter(
+    (channel) => channel.type === ChannelType.TEXT
+  );
+  const audioChannels = server?.channels.filter(
+    (channel) => channel.type === ChannelType.AUDIO
+  );
+  const videoChannels = server?.channels.filter(
+    (channel) => channel.type === ChannelType.VIDEO
+  );
 
   const members = server.members.filter((member) => member.userId !== userId);
 
-  const userRole = server.members.find((member) => member.userId === userId)?.role
+  const userRole = server.members.find(
+    (member) => member.userId === userId
+  )?.role;
 
   const iconsMap = {
     [ChannelType.TEXT]: <Hash size={17} />,
     [ChannelType.AUDIO]: <Headset size={17} />,
-    [ChannelType.VIDEO]: <Video size={17} />
-  }
+    [ChannelType.VIDEO]: <Video size={17} />,
+  };
 
   const roleIconsMap = {
     [MemberRole.ADMIN]: <ShieldAlert size={17} />,
     [MemberRole.MODERATOR]: <Shield size={17} />,
-    [MemberRole.GUEST]: <User size={17} />
-  }
+    [MemberRole.GUEST]: <User size={17} />,
+  };
 
-  if (userRole !== "ADMIN" && userRole !== "MODERATOR" && userRole !== "GUEST") {
-    redirect("/")
+  if (
+    userRole !== "ADMIN" &&
+    userRole !== "MODERATOR" &&
+    userRole !== "GUEST"
+  ) {
+    redirect("/");
   }
   return (
     <div className="w-[300px] bg-[#05040F] h-screen gap-3">
@@ -60,7 +73,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
                   name: channel.name,
                   id: channel.id,
                   icon: iconsMap[channel.type],
-                }))
+                })),
               },
               {
                 label: "Audio Channels",
@@ -69,7 +82,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
                   name: channel.name,
                   id: channel.id,
                   icon: iconsMap[channel.type],
-                }))
+                })),
               },
               {
                 label: "Video Channels",
@@ -78,7 +91,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
                   name: channel.name,
                   id: channel.id,
                   icon: iconsMap[channel.type],
-                }))
+                })),
               },
               {
                 label: "Members",
@@ -86,12 +99,11 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
                 data: members.map((member) => ({
                   name: member.user.name,
                   id: member.id,
-                  icon: roleIconsMap[member.role]
-                }))
-              }
+                  icon: roleIconsMap[member.role],
+                })),
+              },
             ]}
           />
-
         </div>
         <div className="border-t mt-4 border-t-zinc-700">
           <ChannelsNavigator
@@ -104,7 +116,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
                   name: channel.name,
                   id: channel.id,
                   icon: iconsMap[channel.type],
-                }))
+                })),
               },
               {
                 label: "Audio Channels",
@@ -113,7 +125,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
                   name: channel.name,
                   id: channel.id,
                   icon: iconsMap[channel.type],
-                }))
+                })),
               },
               {
                 label: "Video Channels",
@@ -122,7 +134,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
                   name: channel.name,
                   id: channel.id,
                   icon: iconsMap[channel.type],
-                }))
+                })),
               },
             ]}
           />
@@ -130,15 +142,7 @@ export const ServerSidebar = async ({ serverId, userId }: ServerSidebarProps) =>
         <div className="border-t my-4  border-t-zinc-700">
           <MembersNavigator server={server} userRole={userRole} />
         </div>
-        <div className="absolute bottom-0 px-3">
-          If messages are not sharing, or something else happens please reload , and if you find any vulnerability please
-          {" "}<Link className="text-sky-600" href="mailto:ankursharma1493@gmail.com">mail me</Link> as we
-          are hosted using free servers next js on{" "}
-          <Link href="https://vercel.com" className="text-sky-600">Vercel</Link>
-          {" "}and web-socket server on
-          {" "}<Link href="https://railway.app" className="text-sky-600">Railway</Link>
-        </div>
       </ScrollArea>
     </div>
-  )
-}
+  );
+};

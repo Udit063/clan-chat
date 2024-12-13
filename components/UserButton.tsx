@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import Link from "next/link";
+} from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 import { ActionTooltip } from "./ActionTooltip";
 
@@ -20,20 +19,17 @@ interface UserButtonProps {
 }
 
 export function UserButton({ id, name }: UserButtonProps) {
-
   const router = useRouter();
 
   const handleEditProfle = () => {
-    router.push(`/user/${id}`)
-  }
+    router.push(`/user/${id}`);
+  };
   const handleSignOut = () => {
-    signOut()
-  }
-
+    signOut();
+  };
 
   return (
     <Dialog>
-
       <ActionTooltip side="right" label={`Hello ${name}`} align="start">
         <DialogTrigger asChild>
           <button className="h-[48px] w-[48px] bg-neutral-800 flex text-xl text-primary items-center justify-center rounded-full">
@@ -45,13 +41,17 @@ export function UserButton({ id, name }: UserButtonProps) {
         <DialogHeader>
           <DialogTitle>Hello {name}</DialogTitle>
           <DialogDescription>
-            I am Ankur, and just wanted to thank you for using this application, to check the code,
-            <Link target="_blank" href="https://github.com/ankur1493/clan_chat" className="text-blue-500" >{" "}Click here</Link>
+            I am Udit, and just wanted to thank you for using this application.{" "}
           </DialogDescription>
         </DialogHeader>
-        <Button onClick={handleEditProfle} className="bg-neutral-700 text-white hover:bg-neutral-800 duration-500">Edit Profile</Button>
-        <Button onClick={handleSignOut} >Sign Out</Button>
+        {/* <Button
+          onClick={handleEditProfle}
+          className="bg-neutral-700 text-white hover:bg-neutral-800 duration-500"
+        >
+          Edit Profile
+        </Button> */}
+        <Button onClick={handleSignOut}>Sign Out</Button>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-"use client"
-import { useState, useTransition } from "react"
-import { CardWrapper } from "./CardWrapper"
-import { Button } from "@/components/ui/button"
+"use client";
+import { useState, useTransition } from "react";
+import { CardWrapper } from "./CardWrapper";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,41 +9,43 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { registerSchema } from "@/schemas/register"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { FormError } from "./FormError"
-import { register } from "@/actions/register"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { registerSchema } from "@/schemas/register";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { FormError } from "./FormError";
+import { register } from "@/actions/register";
 
 export const Register = () => {
-
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
-      password: ""
+      password: "",
     },
-  })
+  });
   function onSubmit(values: z.infer<typeof registerSchema>) {
-    setError("")
+    setError("");
     startTransition(() => {
-      register(values)
-        .then((data) => {
-          setError(data?.error ?? "");
-        })
+      register(values).then((data) => {
+        setError(data?.error ?? "");
+      });
     });
   }
 
-
   return (
     <div className="w-screen min-h-screen h-full flex justify-center items-center">
-      <CardWrapper headerLabel="Join Now" backLabel="Already have an account, login now" backLabelHref="/login" description="create a new account to start exciting conversations">
+      <CardWrapper
+        headerLabel="Join Now"
+        backLabel="Already have an account, login now"
+        backLabelHref="/login"
+        description="create a new account to start exciting conversations"
+      >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -53,7 +55,7 @@ export const Register = () => {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ankur Sharma" {...field} />
+                    <Input placeholder="Udit Kapoor" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -67,7 +69,7 @@ export const Register = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="ankursharma1493@gmail.com" {...field} />
+                    <Input placeholder="uditkapoor060@gmail.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,17 +82,23 @@ export const Register = () => {
                 <FormItem>
                   <FormLabel>password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="How dare you ask me my password" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="How dare you ask me my password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormError message={error} />
-            <Button disabled={isPending} className="w-full" type="submit">Register</Button>
+            <Button disabled={isPending} className="w-full" type="submit">
+              Register
+            </Button>
           </form>
         </Form>
       </CardWrapper>
     </div>
-  )
-}
+  );
+};

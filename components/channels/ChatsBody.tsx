@@ -34,20 +34,22 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
       ws.onmessage = (event) => {
         const newMessage = JSON.parse(event.data);
         setMessages((prevMessages) => [...prevMessages, newMessage]);
-      }
+      };
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     const getAllMessages = async () => {
       try {
-        const response = await axios.get(`https://clan-chat-five.vercel.app/api/messages/${serverId}/${channelId}`);
+        const response = await axios.get(
+          `https://clan-chat-five.vercel.app/api/messages/${serverId}/${channelId}`
+        );
         if (!response) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         setMessages(response.data);
       } catch (error) {
-        console.error('Error fetching messages:', error);
+        console.error("Error fetching messages:", error);
       }
     };
     getAllMessages();
@@ -55,7 +57,7 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+      chatContainerRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -109,4 +111,3 @@ export function ChatsBody({ serverId, channelId, activeUser }: ChatsBodyProps) {
     </div>
   );
 }
-
